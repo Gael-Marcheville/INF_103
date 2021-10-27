@@ -3,7 +3,7 @@ package tp06;
 public class MBox implements VertexInterface {
 	private final int x; //attribut position abscisse
 	private final int y; //attribut position ordonné
-	private Maze maze;
+	private final Maze maze;
 	
 	public MBox(int xpos, int ypos, Maze m)
 	{

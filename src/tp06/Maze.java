@@ -7,8 +7,8 @@ public class Maze implements GraphInterface {
 	
 		private final MBox[][] maze; //on implémente le labyrinthe comme une matrice de dim 2
 		public Maze(MBox[][] init){
-			int n = init.length;
-			int m = init[0].length; //on suppose que maze[k].length a même valeur pour tout k
+			final int n = init.length;
+			final int m = init[0].length; //on suppose que maze[k].length a même valeur pour tout k
 			maze = new MBox[n][m] ; 
 			for (int k = 0; k < n ; k++) { //évite les copies superficielles de init
 				maze[k] = Arrays.copyOf(init[k], init[k].length) ;
@@ -21,7 +21,7 @@ public class Maze implements GraphInterface {
 			maze[x][y] = boxValue;
 		}	
 		public ArrayList<VertexInterface> getAllVertices(){
-			ArrayList<VertexInterface> allVertices = new ArrayList<VertexInterface>() ;
+			final ArrayList<VertexInterface> allVertices = new ArrayList<VertexInterface>() ;
 			for (int i = 0; i < maze.length; i++) { //parcours suivant x
 				for (int j = 0; j < maze[0].length; j++) {  //parcours suivant y
 					allVertices.add(maze[i][j]);
@@ -31,9 +31,9 @@ public class Maze implements GraphInterface {
 		}
 		public ArrayList<VertexInterface> getSuccessors(VertexInterface vertex){
 			MBox m = (MBox)vertex;
-			int x = m.getX();
-			int y =	m.getY();
-			ArrayList<VertexInterface> successors = new ArrayList<VertexInterface>() ;
+			final int x = m.getX();
+			final int y =	m.getY();
+			final ArrayList<VertexInterface> successors = new ArrayList<VertexInterface>() ;
 			if (m.isWall()) {
 				return successors;
 			}
@@ -51,7 +51,13 @@ public class Maze implements GraphInterface {
 			}
 			return successors;
 		}
-		public int getWeight(VertexInterface src,VertexInterface dst) { 
-			return 0; //on reviendra dessus plus tard
+		public int getWeight(VertexInterface src,VertexInterface dst) { //retourne 1 si il existe une arrête entre srx et dst, 0 sinon
+			final ArrayList<VertexInterface> srcsuccessors = getSuccessors(src);
+			if (srcsuccessors.contains(dst)) {
+			return 1; 
+			}
+			else {
+			return 0;
+			}
 		}
 }
