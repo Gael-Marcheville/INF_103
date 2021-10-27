@@ -4,8 +4,8 @@ public class EBox extends MBox{
 	
 	private boolean isUsed;
 	
-	public EBox(int xpos, int ypos) {
-		super(xpos, ypos);
+	public EBox(int xpos, int ypos, Maze m) {
+		super(xpos, ypos, m);
 		isUsed = false;
 	}
 	

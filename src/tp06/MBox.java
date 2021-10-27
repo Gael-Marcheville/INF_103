@@ -1,15 +1,15 @@
 package tp06;
 
-public class MBox {
+public class MBox implements VertexInterface {
 	private final int x; //attribut position abscisse
 	private final int y; //attribut position ordonné
 	private Maze maze;
 	
-	public MBox(int xpos, int ypos)
+	public MBox(int xpos, int ypos, Maze m)
 	{
 		x = xpos;
 		y = ypos;
-		this.maze = Main.getMaze();
+		this.maze = m;
 	}
 	
 	public int getX() {
@@ -19,4 +19,13 @@ public class MBox {
 		return y;
 	}
 	
+	public Maze getMaze() {
+		return maze;
+	}
+	public String getLabel() { // on définit un identifiant unique (x,y) à partir des coordonnées x et y
+		return "(" + String.valueOf(x) + "," + String.valueOf(y) + ")";
+	}
+	public boolean isWall() { //dit si une MBox est un mur
+		return false;	//de base, une MBox n'est pas un mur
+	}
 }
