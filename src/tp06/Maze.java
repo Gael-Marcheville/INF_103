@@ -1,11 +1,14 @@
 package tp06;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Maze implements GraphInterface {
 	
-		private final MBox[][] maze; //on implémente le labyrinthe comme une matrice de dim 2
+		private MBox[][] maze; //on implémente le labyrinthe comme une matrice de dim 2
 		public Maze(MBox[][] init){
 			final int n = init.length;
 			final int m = init[0].length; //on suppose que maze[k].length a même valeur pour tout k
@@ -59,5 +62,61 @@ public class Maze implements GraphInterface {
 			else {
 			return 0;
 			}
+		}
+		public final void initFromTextFile(String fileName) throws MazeReadingException { //permet de créer un labyrinthe à partir d'un fichier texte 
+		    BufferedReader bufferedreader = null;
+		    FileReader filereader = null;
+		    //on va réaliser deux "tours" du fichier: 
+		      // - un permier pour vérifier que la taille convient et connaître les valeurs pour initialiser la matrice du labyrinthe
+		      // - un second pour la remplir
+		    try {
+		      //1er tour
+		      filereader = new FileReader(fileName);
+		      bufferedreader = new BufferedReader(filereader);
+		      String strCurrentLine;
+		      strCurrentLine = bufferedreader.readLine();
+		      int i = 0; //compte le numéro de la ligne
+		      int columnNumber = strCurrentLine.length(); //nombre de colonne
+		      while ((strCurrentLine = bufferedreader.readLine()) != null) {
+		    	  if (strCurrentLine.length() != columnNumber) { //provoque une erreur si le labyrinthe n'est pas rectangulaire
+		    		  throw new MazeReadingException(fileName,i ,"le labyrinthe n'est pas rectangulaire");
+		    	  } 	  
+		          i += 1;
+		      }
+		      int rowNumber = i + 1; //nombre de lignes
+		      //2nd tour
+		      filereader = new FileReader(fileName);
+		      bufferedreader = new BufferedReader(filereader);
+		      maze = new MBox[rowNumber][columnNumber]; //création du labyrinthe
+		      i = 0; //on réinitialise le numéro de ligne
+		      boolean d = false; //on vérifie qu'on a qu'un seul départ et qu'une seule arrivée
+		      boolean a = false;
+		      while ((strCurrentLine = bufferedreader.readLine()) != null) {
+		    	  for (int k = 0; k < columnNumber; k++) {
+		    		  char sBox = strCurrentLine.charAt(k); //on récupère le type de boite
+		    		  if (sBox == 'E'){maze[i][k] = new EBox(i,k,this);} //si la boite est de type EBox, on ajoute une EBox
+		    		  else if (sBox == 'W') {maze[i][k] = new WBox(i,k,this);} //si la boite est de type WBox, on ajoute une WBox
+		    		  else if (sBox == 'A' && !a) {maze[i][k] = new ABox(i,k,this); a = true;} //si la boite est de type ABox, on ajoute une ABox
+		    		  else if (sBox == 'D' && !d) {maze[i][k] = new DBox(i,k,this); d = true;} //si la boite est de type DBox, on ajoute une DBox 
+		    		  else if (sBox == 'A' && a) {throw new MazeReadingException(fileName,i ,"Il y a deux caractères A, il en faut un unique");} //provoque une erreur si le fichier texte contient deux A
+		    		  else if (sBox == 'D' && d) {throw new MazeReadingException(fileName,i ,"Il y a deux caractères D, il en faut un unique");} //provoque une erreur si le fichier texte contient deux D
+		    		  else {throw new MazeReadingException(fileName,i ,"Il y a un caractère différent de A,E,W ou D");} //provoque une erreur si le fichier texte contient autre chose que A,E,W ou D
+		    	  }
+		    	  i += 1;
+		    	  }
+		      	  if (!a) {throw new MazeReadingException(fileName,i ,"Il n'y a pas de A, il en faut un unique");} //provoque une erreur si le fichier texte ne contient pas de A
+	    		  if (!d) {throw new MazeReadingException(fileName,i ,"Il n'y a pas de D, il en faut un unique");} //provoque une erreur si le fichier texte ne contient pas de D	       
+		    } catch (IOException e) {
+		      e.printStackTrace();
+		    } finally {
+		      try {
+		        if (bufferedreader != null)
+		          bufferedreader.close();
+		        if (filereader != null)
+		          filereader.close();
+		      } catch (IOException e) {
+		        e.printStackTrace();
+		      }
+		    }
 		}
 }
