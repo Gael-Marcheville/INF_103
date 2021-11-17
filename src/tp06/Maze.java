@@ -1,14 +1,16 @@
 package tp06;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Maze implements GraphInterface {
 	
-		private MBox[][] maze; //on implémente le labyrinthe comme une matrice de dim 2
+		private MBox[][] maze; //on implémente le labyrinthe comme une matrice de dim 2, n'est pas private car besoin modifier le tableau dans le init et dans le initFromTextFile
 		public Maze(MBox[][] init){
 			final int n = init.length;
 			final int m = init[0].length; //on suppose que maze[k].length a même valeur pour tout k
@@ -118,5 +120,20 @@ public class Maze implements GraphInterface {
 		        e.printStackTrace();
 		      }
 		    }
+		}
+		public final void saveToTextFile(String fileName) throws FileNotFoundException { //check si ça marche et ajouter les coms
+			PrintWriter printWriter = new PrintWriter(fileName);
+			int columnNumber = maze.length;
+			int rowNumber = maze[0].length;
+			for (int k = 0; k < columnNumber; k ++) {
+				String ligne = "";
+				for (int i = 0; i <  rowNumber; i++) {
+					MBox SBox = maze[k][i];
+					ligne += SBox.getType();
+				}
+				printWriter.printf(ligne);
+				printWriter.println(); 
+	        }
+	        printWriter.close();
 		}
 }

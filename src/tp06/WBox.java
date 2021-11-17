@@ -8,4 +8,7 @@ public class WBox extends MBox{
 	public boolean isWall() { 
 		return true;	//les objets de cette classe sont des murs
 	}
+	public String getType() { 
+		return "W";	//renvoie le type de la classe en String
+	}
 }

@@ -17,4 +17,7 @@ public class EBox extends MBox{
 	public void setIsUsed(boolean isUsedValue) { //set si le chemin passe par la case
 		isUsed = isUsedValue;
 	}
+	public String getType() { 
+		return "E";	//renvoie le type de la classe en String
+	}
 }

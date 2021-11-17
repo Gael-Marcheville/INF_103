@@ -15,5 +15,5 @@ public interface GraphInterface {
     public ArrayList<VertexInterface> getAllVertices() ; //donne la liste des sommets
     public ArrayList<VertexInterface> getSuccessors(VertexInterface vertex) ; //donne la liste des successeurs de vertex
     public int getWeight(VertexInterface src,VertexInterface dst) ; //donne la distance entre s1 et s2
-
+    
 }
