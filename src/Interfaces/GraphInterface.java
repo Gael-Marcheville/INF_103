@@ -1,4 +1,4 @@
-package tp06;
+package Interfaces;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,6 @@
-package tp06;
+package maze;
+
+import Interfaces.VertexInterface;
 
 public class MBox implements VertexInterface {
 	private final int x; //attribut position abscisse

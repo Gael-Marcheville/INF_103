@@ -1,4 +1,4 @@
-package tp06;
+package Interfaces;
 
 public interface PiInterface {
 	public void init(GraphInterface g) ; //initialise une fonction pi sur les sommets valant tous +inf

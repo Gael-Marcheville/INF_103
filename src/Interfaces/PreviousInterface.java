@@ -1,4 +1,4 @@
-package tp06;
+package Interfaces;
 
 public interface PreviousInterface {
 	public VertexInterface value(VertexInterface x) ; //donne la valeur de p(x)

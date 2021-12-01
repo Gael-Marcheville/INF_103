@@ -1,9 +1,15 @@
-package tp06;
+package dijkstra;
 
 import java.util.ArrayList;
 
+import Interfaces.ASetInterface;
+import Interfaces.GraphInterface;
+import Interfaces.PiInterface;
+import Interfaces.PreviousInterface;
+import Interfaces.VertexInterface;
+
 public class Dijkstra {
-	private PreviousInterface dijkstra(GraphInterface g, VertexInterface r, ASetInterface a, PiInterface pi, PreviousInterface previous) {
+	private static PreviousInterface dijkstra(GraphInterface g, VertexInterface r, ASetInterface a, PiInterface pi, PreviousInterface previous) {
 		a.add(r);
 		VertexInterface pivot = r;
 		pi.init(g); // initialise pi avec tout les sommets de g à +inf
@@ -33,5 +39,11 @@ public class Dijkstra {
 			a.add(y); // comme a est un ensemble, si y in a, a.add(y) n'ajoute pas une deuxième fois y à a
 		}
 		return previous;
+	}
+	public static PreviousInterface dijkstra(GraphInterface g, VertexInterface r) {
+		final ASet aSet = new ASet();
+		final Pi pi = new Pi();
+		final Previous previous = new Previous();
+		return dijkstra(g,r,aSet,pi,previous);
 	}
 }

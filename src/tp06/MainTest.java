@@ -2,6 +2,10 @@ package tp06;
 
 import java.io.FileNotFoundException;
 
+import maze.MBox;
+import maze.Maze;
+import maze.MazeReadingException;
+
 public class MainTest {
 
 	public static void main(String[] args) throws MazeReadingException, FileNotFoundException {

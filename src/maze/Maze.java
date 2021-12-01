@@ -1,12 +1,15 @@
-package tp06;
+package maze;
 
-import java.io.BufferedReader;
+import java.io.BufferedReader; 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import Interfaces.GraphInterface;
+import Interfaces.VertexInterface;
 
 public class Maze implements GraphInterface {
 
