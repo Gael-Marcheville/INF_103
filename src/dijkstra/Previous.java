@@ -11,11 +11,11 @@ public class Previous implements PreviousInterface {
 	public Previous(){
 		previous = new Hashtable<VertexInterface, VertexInterface>();
 	}
-	public VertexInterface value(VertexInterface x) {
+	public VertexInterface value(final VertexInterface x) {
 		return previous.get(x);
 	}
 
-	public void changeValue(VertexInterface x, VertexInterface y) {
+	public void changeValue(final VertexInterface x, final VertexInterface y) {
 		previous.put(x, y);
 	}
 

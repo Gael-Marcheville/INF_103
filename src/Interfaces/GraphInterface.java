@@ -13,7 +13,7 @@ public interface GraphInterface {
 	
 	//Interface retenue
     public ArrayList<VertexInterface> getAllVertices() ; //donne la liste des sommets
-    public ArrayList<VertexInterface> getSuccessors(VertexInterface vertex) ; //donne la liste des successeurs de vertex
-    public Double getWeight(VertexInterface src,VertexInterface dst) ; //donne la distance entre s1 et s2
+    public ArrayList<VertexInterface> getSuccessors(final VertexInterface vertex) ; //donne la liste des successeurs de vertex
+    public Double getWeight(final VertexInterface src, final VertexInterface dst) ; //donne la distance entre s1 et s2
     
 }

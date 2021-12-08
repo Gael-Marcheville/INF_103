@@ -2,7 +2,7 @@ package maze;
 
 public class WBox extends MBox{
 
-	public WBox(int xpos, int ypos, Maze m) {
+	public WBox(final int xpos, final int ypos, final Maze m) {
 		super(xpos, ypos, m);
 	}
 	public boolean isWall() { 

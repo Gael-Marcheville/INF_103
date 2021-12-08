@@ -11,15 +11,15 @@ import maze.PBox;
 
 public class MainTest {
 
-	public static void main(String[] args) throws MazeReadingException, FileNotFoundException {
-		MBox[][] init = new MBox[1][1];
-		Maze maze = new Maze(init);
-		Maze solution = new Maze(init);
+	public static void main(final String[] args) throws MazeReadingException, FileNotFoundException {
+		final MBox[][] init = new MBox[1][1];
+		final Maze maze = new Maze(init);
+		final Maze solution = new Maze(init);
 		maze.initFromTextFile("data/labyrinthe.txt");
 		solution.initFromTextFile("data/labyrinthe.txt");
-		MBox d = maze.getStart();
-		MBox a = maze.getEnd();
-		PreviousInterface previous = Dijkstra.dijkstra(maze, d);
+		final MBox d = maze.getStart();
+		final MBox a = maze.getEnd();
+		final PreviousInterface previous = Dijkstra.dijkstra(maze, d);
 		MBox t = (MBox) previous.value(a); //On ne remplace pas A
 		while (t != d && t != null) {
 			final int x = t.getX();

@@ -1,6 +1,5 @@
 package dijkstra;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
 import Interfaces.ASetInterface;
@@ -13,25 +12,20 @@ public class ASet implements ASetInterface {
 	{   aSet = new HashSet<VertexInterface>();
 	}
 
-	public boolean contains(VertexInterface s) {
+	public boolean contains(final VertexInterface s) {
 		return aSet.contains(s);
 	}
 
-	public void add(VertexInterface s) {
+	public void add(final VertexInterface s) {
 		aSet.add(s);
 	}
 
-	public void remove(VertexInterface s) { //si s n'est pas dans ASet, cette fonction ne fait rien
+	public void remove(final VertexInterface s) { //si s n'est pas dans ASet, cette fonction ne fait rien
 		aSet.remove(s);
 	}
 
 	public int size() {
 		return aSet.size();
-	}
-	
-
-	public Object[] toArray(){
-		return aSet.toArray();
 	}
 	
 

@@ -2,20 +2,8 @@ package maze;
 
 public class EBox extends MBox{
 	
-	private boolean isUsed;
-	
-	public EBox(int xpos, int ypos, Maze m) {
+	public EBox(final int xpos,final int ypos,final Maze m) {
 		super(xpos, ypos, m);
-		isUsed = false;
-	}
-	
-	public boolean getIsUsed() { //get si le chemin passe par la case
-		return isUsed;
-	}
-
-	
-	public void setIsUsed(boolean isUsedValue) { //set si le chemin passe par la case
-		isUsed = isUsedValue;
 	}
 	public String getType() { 
 		return "E";	//renvoie le type de la classe en String

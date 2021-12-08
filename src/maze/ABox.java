@@ -2,7 +2,7 @@ package maze;
 
 public class ABox extends MBox{
 
-	public ABox(int xpos, int ypos, Maze m) {
+	public ABox(final int xpos, final int ypos, final Maze m) {
 		super(xpos, ypos, m);
 	}
 	public String getType() { 

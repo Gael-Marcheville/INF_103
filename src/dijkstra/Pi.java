@@ -16,18 +16,18 @@ public class Pi implements PiInterface {
 	}
 	
 	@Override
-	public void init(GraphInterface g) { //initialisation de pi pour l'algo dijkstra
+	public void init(final GraphInterface g) { //initialisation de pi pour l'algo dijkstra
 		final ArrayList<VertexInterface> allVertices = g.getAllVertices();
 		for(VertexInterface v: allVertices) {
 			pi.put(v,infty);
 		}
 	}
 
-	public Double value(VertexInterface s) {
+	public Double value(final VertexInterface s) {
 		return pi.get(s);
 	}
 	
-	public void changeValue(VertexInterface s, Double x) {
+	public void changeValue(final VertexInterface s, final Double x) {
 		pi.put(s, x);
 		
 	}

@@ -1,6 +1,6 @@
 package maze;
 
-import java.io.BufferedReader; 
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -16,7 +16,7 @@ public class Maze implements GraphInterface {
 	private MBox[][] maze; // on implémente le labyrinthe comme une matrice de dim 2, n'est pas private car
 							// besoin modifier le tableau dans le init et dans le initFromTextFile
 
-	public Maze(MBox[][] init) {
+	public Maze(final MBox[][] init) {
 		final int n = init.length;
 		final int m = init[0].length; // on suppose que maze[k].length a même valeur pour tout k
 		maze = new MBox[n][m];
@@ -25,11 +25,11 @@ public class Maze implements GraphInterface {
 		}
 	}
 
-	public MBox getBox(int x, int y) { // donne la valeur d'une case
+	public MBox getBox(final int x, final int y) { // donne la valeur d'une case
 		return maze[x][y];
 	}
 
-	public void setBox(int x, int y, MBox boxValue) { // change la valeur d'une case
+	public void setBox(final int x, final int y, final MBox boxValue) { // change la valeur d'une case
 		maze[x][y] = boxValue;
 	}
 
@@ -42,44 +42,47 @@ public class Maze implements GraphInterface {
 		}
 		return allVertices;
 	}
-	
-	public MBox getStart() { //on suppose que le labyrinthe est bien formé (un unique départ), sinon garde la dernière case départ croisée
-		int columnNumber = maze.length;
-		int rowNumber = maze[0].length;
-		MBox depart = new DBox(0, 0, this); //création en 0,0 qui sera modifié plus tard
+
+	public MBox getStart() { // on suppose que le labyrinthe est bien formé (un unique départ), sinon garde
+								// la dernière case départ croisée
+		final int columnNumber = maze.length;
+		final int rowNumber = maze[0].length;
+		MBox depart = new DBox(0, 0, this); // création en 0,0 qui sera modifié plus tard
 		for (int k = 0; k < columnNumber; k++) {
 			for (int i = 0; i < rowNumber; i++) {
 				if (maze[k][i].getType() == "D") {
 					depart = maze[k][i];
 				}
 			}
-	}
+		}
 		return depart;
 	}
-	
-	public MBox getEnd() { //on suppose que le labyrinthe est bien formé (une unique arrivé), sinon garde la dernière case départ croisée
-		int columnNumber = maze.length;
-		int rowNumber = maze[0].length;
-		MBox arrivee = new DBox(0, 0, this); //création en 0,0 qui sera modifié plus tard
+
+	public MBox getEnd() { // on suppose que le labyrinthe est bien formé (une unique arrivé), sinon garde
+							// la dernière case départ croisée
+		final int columnNumber = maze.length;
+		final int rowNumber = maze[0].length;
+		MBox arrivee = new DBox(0, 0, this); // création en 0,0 qui sera modifié plus tard
 		for (int k = 0; k < columnNumber; k++) {
 			for (int i = 0; i < rowNumber; i++) {
 				if (maze[k][i].getType() == "A") {
 					arrivee = maze[k][i];
 				}
 			}
-	}
+		}
 		return arrivee;
 	}
 
-	public ArrayList<VertexInterface> getSuccessors(VertexInterface vertex) {
-		MBox m = (MBox) vertex;
+	public ArrayList<VertexInterface> getSuccessors(final VertexInterface vertex) {
+		final MBox m = (MBox) vertex;
 		final int x = m.getX();
 		final int y = m.getY();
 		final ArrayList<VertexInterface> successors = new ArrayList<VertexInterface>();
 		if (m.isWall()) {
 			return successors;
 		}
-		if ((x - 1) >= 0 && !maze[x - 1][y].isWall()) { // on vérifie que x-1 est dans le graphe et que maze[x-1][y] n'est
+		if ((x - 1) >= 0 && !maze[x - 1][y].isWall()) { // on vérifie que x-1 est dans le graphe et que maze[x-1][y]
+														// n'est
 														// pas un mur
 			successors.add(maze[x - 1][y]); // ajout de l'élément
 		}
@@ -95,22 +98,23 @@ public class Maze implements GraphInterface {
 		return successors;
 	}
 
-	public Double getWeight(VertexInterface src, VertexInterface dst) { // retourne 1 si il existe une arrête entre srx et
-																		// dst, 0 sinon
+	public Double getWeight(final VertexInterface src, final VertexInterface dst) { // retourne 1 si il existe une
+																					// arrête entre srx et
+		// dst, 0 sinon
 		final ArrayList<VertexInterface> srcsuccessors = getSuccessors(src);
 		if (srcsuccessors.contains(dst)) {
 			return (double) 1;
-		} 
-		if (src == dst){
-			return (double) 0;
 		}
-		else {
+		if (src == dst) {
+			return (double) 0;
+		} else {
 			return Double.POSITIVE_INFINITY;
 		}
 	}
 
-	public final void initFromTextFile(String fileName) throws MazeReadingException { // permet de créer un labyrinthe à
-																						// partir d'un fichier texte
+	public final void initFromTextFile(final String fileName) throws MazeReadingException { // permet de créer un
+																							// labyrinthe à
+		// partir d'un fichier texte
 		BufferedReader bufferedreader = null;
 		FileReader filereader = null;
 		// on va réaliser deux "tours" du fichier:
@@ -124,7 +128,7 @@ public class Maze implements GraphInterface {
 			String strCurrentLine;
 			strCurrentLine = bufferedreader.readLine();
 			int i = 0; // compte le numéro de la ligne
-			int columnNumber = strCurrentLine.length(); // nombre de colonne
+			final int columnNumber = strCurrentLine.length(); // nombre de colonne
 			while ((strCurrentLine = bufferedreader.readLine()) != null) {
 				if (strCurrentLine.length() != columnNumber) { // provoque une erreur si le labyrinthe n'est pas
 																// rectangulaire
@@ -132,7 +136,7 @@ public class Maze implements GraphInterface {
 				}
 				i += 1;
 			}
-			int rowNumber = i + 1; // nombre de lignes
+			final int rowNumber = i + 1; // nombre de lignes
 			// 2nd tour
 			filereader = new FileReader(fileName);
 			bufferedreader = new BufferedReader(filereader);
@@ -189,21 +193,22 @@ public class Maze implements GraphInterface {
 		}
 	}
 
-	public final void saveToTextFile(String fileName) throws FileNotFoundException { //permet de créer un fichier texte à partir d'un labyrinthe
-		PrintWriter printWriter = new PrintWriter(fileName);
+	public final void saveToTextFile(final String fileName) throws FileNotFoundException { // permet de créer un fichier texte
+																						// à partir d'un labyrinthe
+		final PrintWriter printWriter = new PrintWriter(fileName);
 
-			int columnNumber = maze.length;
-			int rowNumber = maze[0].length;
-			for (int k = 0; k < columnNumber; k++) {
-				String ligne = "";
-				for (int i = 0; i < rowNumber; i++) {
-					MBox SBox = maze[k][i];
-					ligne += SBox.getType();
-				}
-				printWriter.printf(ligne);
-				printWriter.println();
+		final int columnNumber = maze.length;
+		final int rowNumber = maze[0].length;
+		for (int k = 0; k < columnNumber; k++) {
+			String ligne = "";
+			for (int i = 0; i < rowNumber; i++) {
+				final MBox SBox = maze[k][i];
+				ligne += SBox.getType();
 			}
-			printWriter.close();
-		
+			printWriter.printf(ligne);
+			printWriter.println();
+		}
+		printWriter.close();
+
 	}
 }

@@ -7,7 +7,7 @@ public class MBox implements VertexInterface {
 	private final int y; //attribut position ordonné
 	private final Maze maze;
 	
-	public MBox(int xpos, int ypos, Maze m)
+	public MBox(final int xpos, final int ypos,final Maze m)
 	{
 		x = xpos;
 		y = ypos;
@@ -31,6 +31,6 @@ public class MBox implements VertexInterface {
 		return false;	//de base, une MBox n'est pas un mur
 	}
 	public String getType() { 
-		return "M";	//renvoie le type de la classe en String
+		return "M";	//renvoie le type de la classe en String, M signifiant que la case n'a pas de type définit
 	}
 }
