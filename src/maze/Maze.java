@@ -35,12 +35,40 @@ public class Maze implements GraphInterface {
 
 	public ArrayList<VertexInterface> getAllVertices() {
 		final ArrayList<VertexInterface> allVertices = new ArrayList<VertexInterface>();
-		for (int i = 0; i < maze.length; i++) { // parcours suivant x
-			for (int j = 0; j < maze[0].length; j++) { // parcours suivant y
-				allVertices.add(maze[i][j]);
+		for (MBox[] L : maze) { // parcours suivant x
+			for (MBox m : L) { // parcours suivant y
+				allVertices.add(m);
 			}
 		}
 		return allVertices;
+	}
+	
+	public MBox getStart() { //on suppose que le labyrinthe est bien formé (un unique départ), sinon garde la dernière case départ croisée
+		int columnNumber = maze.length;
+		int rowNumber = maze[0].length;
+		MBox depart = new DBox(0, 0, this); //création en 0,0 qui sera modifié plus tard
+		for (int k = 0; k < columnNumber; k++) {
+			for (int i = 0; i < rowNumber; i++) {
+				if (maze[k][i].getType() == "D") {
+					depart = maze[k][i];
+				}
+			}
+	}
+		return depart;
+	}
+	
+	public MBox getEnd() { //on suppose que le labyrinthe est bien formé (une unique arrivé), sinon garde la dernière case départ croisée
+		int columnNumber = maze.length;
+		int rowNumber = maze[0].length;
+		MBox arrivee = new DBox(0, 0, this); //création en 0,0 qui sera modifié plus tard
+		for (int k = 0; k < columnNumber; k++) {
+			for (int i = 0; i < rowNumber; i++) {
+				if (maze[k][i].getType() == "A") {
+					arrivee = maze[k][i];
+				}
+			}
+	}
+		return arrivee;
 	}
 
 	public ArrayList<VertexInterface> getSuccessors(VertexInterface vertex) {
@@ -51,29 +79,33 @@ public class Maze implements GraphInterface {
 		if (m.isWall()) {
 			return successors;
 		}
-		if (x - 1 >= 0 && !maze[x - 1][y].isWall()) { // on vérifie que x-1 est dans le graphe et que maze[x-1][y] n'est
+		if ((x - 1) >= 0 && !maze[x - 1][y].isWall()) { // on vérifie que x-1 est dans le graphe et que maze[x-1][y] n'est
 														// pas un mur
 			successors.add(maze[x - 1][y]); // ajout de l'élément
 		}
-		if (x + 1 < maze.length && !maze[x + 1][y].isWall()) {
+		if ((x + 1) < maze.length && !maze[x + 1][y].isWall()) {
 			successors.add(maze[x + 1][y]); // ajout de l'élément
 		}
-		if (y - 1 >= 0 && !maze[x][y - 1].isWall()) {
-			successors.add(maze[y - 1][y]); // ajout de l'élément
+		if ((y - 1) >= 0 && !maze[x][y - 1].isWall()) {
+			successors.add(maze[x][y - 1]); // ajout de l'élément
 		}
-		if (y + 1 < maze[0].length && !maze[x][y + 1].isWall()) { // maze[0].length donne la largeur du tableau
+		if ((y + 1) < maze[0].length && !maze[x][y + 1].isWall()) { // maze[0].length donne la largeur du tableau
 			successors.add(maze[x][y + 1]); // ajout de l'élément
 		}
 		return successors;
 	}
 
-	public int getWeight(VertexInterface src, VertexInterface dst) { // retourne 1 si il existe une arrête entre srx et
+	public Double getWeight(VertexInterface src, VertexInterface dst) { // retourne 1 si il existe une arrête entre srx et
 																		// dst, 0 sinon
 		final ArrayList<VertexInterface> srcsuccessors = getSuccessors(src);
 		if (srcsuccessors.contains(dst)) {
-			return 1;
-		} else {
-			return 0;
+			return (double) 1;
+		} 
+		if (src == dst){
+			return (double) 0;
+		}
+		else {
+			return Double.POSITIVE_INFINITY;
 		}
 	}
 

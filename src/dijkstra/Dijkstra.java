@@ -9,41 +9,47 @@ import Interfaces.PreviousInterface;
 import Interfaces.VertexInterface;
 
 public class Dijkstra {
-	private static PreviousInterface dijkstra(GraphInterface g, VertexInterface r, ASetInterface a, PiInterface pi, PreviousInterface previous) {
+	private static PreviousInterface dijkstra(GraphInterface g, VertexInterface r, ASetInterface a, PiInterface pi,
+			PreviousInterface previous) {
+		ArrayList<VertexInterface> allVertices = g.getAllVertices();
 		a.add(r);
 		VertexInterface pivot = r;
 		pi.init(g); // initialise pi avec tout les sommets de g à +inf
-		pi.changeValue(r, 0); // on initialise la valeur de r à 0
-		final int n = g.getAllVertices().size(); // nombre de sommets
+		pi.changeValue(r, (double) 0); // on initialise la valeur de r à 0
+		final int n = allVertices.size(); // nombre de sommets
 		for (int j = 0; j < n; j++) {
 			ArrayList<VertexInterface> successors = g.getSuccessors(pivot);
-			final int length = successors.size();
-			ArrayList<VertexInterface> candidat_pivot = new ArrayList<VertexInterface>(); // on va y lister les sommets qui peuvent devenir pivot																						
-			for (int k = 0; k < length; k++) {
-				VertexInterface y = successors.get(k);
-				if (!a.isIn(y)) {
-					if (pi.value(pivot) + g.getWeight(pivot, y) < pi.value(y)) {
+			for (VertexInterface y : successors) {
+				if (!a.contains(y)) {
+					if (pi.value(pivot) + g.getWeight(pivot, y) < pi.value(y));
 						pi.changeValue(y, pi.value(pivot) + g.getWeight(pivot, y));
 						previous.changeValue(y, pivot);
-						candidat_pivot.add(y);
 					}
 				}
+			VertexInterface y = allVertices.get(0);
+			int k = 1;
+			while (a.contains(y) && (k < n)){
+				y = allVertices.get(k);
+				k += 1;
 			}
-			VertexInterface y = pivot; // y est la valeur du min
-			for (int k = 1; k < candidat_pivot.size(); k++) {
-				if (pi.value(y) > pi.value(candidat_pivot.get(k))) {
-					y = candidat_pivot.get(k);
+			for (VertexInterface x : allVertices) {
+				if ((!a.contains(x)) && (pi.value(y) > pi.value(x))) {
+					y = x;
+					
 				}
 			}
 			pivot = y;
-			a.add(y); // comme a est un ensemble, si y in a, a.add(y) n'ajoute pas une deuxième fois y à a
+			a.add(y); // comme a est un ensemble, si y in a, a.add(y) n'ajoute pas une deuxième fois y
+						// à a
 		}
+
 		return previous;
 	}
+
 	public static PreviousInterface dijkstra(GraphInterface g, VertexInterface r) {
 		final ASet aSet = new ASet();
 		final Pi pi = new Pi();
 		final Previous previous = new Previous();
-		return dijkstra(g,r,aSet,pi,previous);
+		return dijkstra(g, r, aSet, pi, previous);
 	}
 }

@@ -8,11 +8,11 @@ import Interfaces.PiInterface;
 import Interfaces.VertexInterface;
 
 public class Pi implements PiInterface {
-	private final Hashtable<VertexInterface,Integer> pi; 
-	private final Integer infty = Integer.MAX_VALUE; //valeur de l'infini pour notre implémentation
+	private final Hashtable<VertexInterface, Double> pi; 
+	private final Double infty = Double.POSITIVE_INFINITY; //valeur de l'infini pour notre implémentation
 	
 	public Pi(){
-		pi = new Hashtable<VertexInterface, Integer>();
+		pi = new Hashtable<VertexInterface, Double>();
 	}
 	
 	@Override
@@ -23,11 +23,11 @@ public class Pi implements PiInterface {
 		}
 	}
 
-	public int value(VertexInterface s) {
+	public Double value(VertexInterface s) {
 		return pi.get(s);
 	}
 	
-	public void changeValue(VertexInterface s, int x) {
+	public void changeValue(VertexInterface s, Double x) {
 		pi.put(s, x);
 		
 	}
