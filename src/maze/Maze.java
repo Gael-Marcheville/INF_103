@@ -16,6 +16,11 @@ public class Maze implements GraphInterface {
 	private MBox[][] maze; // on implémente le labyrinthe comme une matrice de dim 2, n'est pas private car
 							// besoin modifier le tableau dans le init et dans le initFromTextFile
 
+	/**
+	 * Renvoie un objet Maze initialisé avec une matrice de MBox init
+	 *
+	 * @param init matrice de MBox
+	 */
 	public Maze(final MBox[][] init) {
 		final int n = init.length;
 		final int m = init[0].length; // on suppose que maze[k].length a même valeur pour tout k
@@ -24,15 +29,31 @@ public class Maze implements GraphInterface {
 			maze[k] = Arrays.copyOf(init[k], init[k].length);
 		}
 	}
-
+	/**
+	 * Renvoie le noeud du graphe d'abscisse x et d'ordonné y
+	 *
+	 * @param x abscisse du noeud
+	 * @param y ordonnée du noeud
+	 * @return Vertex d'abscisse x et d'ordonné y
+	 */
 	public MBox getBox(final int x, final int y) { // donne la valeur d'une case
 		return maze[x][y];
 	}
-
-	public void setBox(final int x, final int y, final MBox boxValue) { // change la valeur d'une case
-		maze[x][y] = boxValue;
+	/**
+	 * Change le noeud du graphe d'abscisse x et d'ordonné y
+	 *
+	 * @param x abscisse du noeud
+	 * @param y ordonnée du noeud 
+	 * @param boxValue nouvelle valeur du noeud
+	 */
+	public void setBox(final int x, final int y, final VertexInterface boxValue) { // change la valeur d'une case
+		maze[x][y] = (MBox) boxValue;
 	}
-
+	/**
+	 * Renvoie la liste des noeuds graphe
+	 *
+	 * @return ArrayList contenant les noeuds du graphe
+	 */
 	public ArrayList<VertexInterface> getAllVertices() {
 		final ArrayList<VertexInterface> allVertices = new ArrayList<VertexInterface>();
 		for (MBox[] L : maze) { // parcours suivant x
@@ -42,37 +63,68 @@ public class Maze implements GraphInterface {
 		}
 		return allVertices;
 	}
-
-	public MBox getStart() { // on suppose que le labyrinthe est bien formé (un unique départ), sinon garde
+	/**
+	 * Renvoie le noeud de départ
+	 * 
+	 * @return Vertex qui est le départ.
+	 * @throws Exception si le labyrinthe compose une unique case départ
+	 */
+	public MBox getStart() throws Exception { // on suppose que le labyrinthe est bien formé (un unique départ), sinon garde
 								// la dernière case départ croisée
 		final int columnNumber = maze.length;
 		final int rowNumber = maze[0].length;
-		MBox depart = new DBox(0, 0, this); // création en 0,0 qui sera modifié plus tard
+		MBox depart = null; // création en 0,0 qui sera modifié plus tard
+		int count = 0; //entier comptant le nombre de case départ pour gérer les exceptions
 		for (int k = 0; k < columnNumber; k++) {
 			for (int i = 0; i < rowNumber; i++) {
 				if (maze[k][i].getType() == "D") {
 					depart = maze[k][i];
+					count += 1;
 				}
 			}
 		}
+		if (depart == null) {
+			throw new Exception("Il n'y a pas de case départ");
+		}
+		if (count > 1) {
+			throw new Exception("Il y a plus d'une case départ");
+		}
 		return depart;
 	}
-
-	public MBox getEnd() { // on suppose que le labyrinthe est bien formé (une unique arrivé), sinon garde
+	/**
+	 * Renvoie le noeud d'arrivée
+	 * 
+	 * @return Vertex qui est l'arrivée.
+	 * @throws Exception si le labyrinthe compose une unique case d'arrivée
+	 */
+	public MBox getEnd() throws Exception { // on suppose que le labyrinthe est bien formé (une unique arrivé), sinon garde
 							// la dernière case départ croisée
 		final int columnNumber = maze.length;
 		final int rowNumber = maze[0].length;
-		MBox arrivee = new DBox(0, 0, this); // création en 0,0 qui sera modifié plus tard
+		MBox arrivee = null; // création en 0,0 qui sera modifié plus tard
+		int count = 0; //entier comptant le nombre de case départ pour gérer les exceptions
 		for (int k = 0; k < columnNumber; k++) {
 			for (int i = 0; i < rowNumber; i++) {
 				if (maze[k][i].getType() == "A") {
 					arrivee = maze[k][i];
+					count += 1;
 				}
 			}
 		}
+		if (arrivee == null) {
+			throw new Exception("Il n'y a pas de case départ");
+		}
+		if (count > 1) {
+			throw new Exception("Il y a plus d'une case départ");
+		}
 		return arrivee;
 	}
-
+	/**
+	 * Renvoie la liste des noeuds enfants d'un noeud du graphe
+	 *
+	 * @param  vertex un noeud du graphe réprésentant le labyrinthe
+	 * @return ArrayList contenant les successeurs de vertex
+	 */
 	public ArrayList<VertexInterface> getSuccessors(final VertexInterface vertex) {
 		final MBox m = (MBox) vertex;
 		final int x = m.getX();
@@ -97,7 +149,13 @@ public class Maze implements GraphInterface {
 		}
 		return successors;
 	}
-
+	/**
+	 * Renvoie la valeur de l'arête entre deux sommets, éventuellent +inf
+	 *
+	 * @param  src sommet de départ
+	 * @param dst sommet d'arrivée
+	 * @return double donnant le poids de l'arête (src,dst)
+	 */
 	public Double getWeight(final VertexInterface src, final VertexInterface dst) { // retourne 1 si il existe une
 																					// arrête entre srx et
 		// dst, 0 sinon
@@ -111,7 +169,12 @@ public class Maze implements GraphInterface {
 			return Double.POSITIVE_INFINITY;
 		}
 	}
-
+	/**
+	 * Change le labyrinthe en l'initialisant à partir d'un fichier texte
+	 *
+	 * @param fileName fichier texte d'initialisation
+	 * @throws MazeReadingException Renvoie une erreur en cas de non conformité du fichier d'initialisation
+	 */
 	public final void initFromTextFile(final String fileName) throws MazeReadingException { // permet de créer un
 																							// labyrinthe à
 		// partir d'un fichier texte
@@ -192,7 +255,12 @@ public class Maze implements GraphInterface {
 			}
 		}
 	}
-
+	/**
+	 * Enregistre le labyrinthe dans un fichier texte
+	 *
+	 * @param fileName fichier texte de sauvegarde du labyrinthe
+	 * @throws FileNotFoundException
+	 */
 	public final void saveToTextFile(final String fileName) throws FileNotFoundException { // permet de créer un fichier texte
 																						// à partir d'un labyrinthe
 		final PrintWriter printWriter = new PrintWriter(fileName);

@@ -9,6 +9,17 @@ import Interfaces.PreviousInterface;
 import Interfaces.VertexInterface;
 
 public class Dijkstra {
+	/**
+	 * Renvoie un objet Previous permettant de remonter au plus court chemin à partir de r
+	 * 
+	 * @param g graphe
+	 * @param r Vertex racine de l'exécution de l'algorithme
+	 * @param a ASet ensemble permettant de garder les Vertex déjà traités
+	 * @param pi Hashtable permettant de garder le poids des chemins
+	 * @param previous Hashable permettant de garder les chemins
+	 *
+	 * @return previous Hashable, previous(s) donnant le père de s dans le plus court chemin (r,s)
+	 */
 	private static PreviousInterface dijkstra(final GraphInterface g, final VertexInterface r, final ASetInterface a, final PiInterface pi, final PreviousInterface previous) {
 		final ArrayList<VertexInterface> allVertices = g.getAllVertices();
 		a.add(r);
@@ -45,7 +56,14 @@ public class Dijkstra {
 
 		return previous;
 	}
-
+	/**
+	 * Renvoie un objet Previous permettant de remonter au plus court chemin à partir de r
+	 * 
+	 * @param g graphe
+	 * @param r Vertex racine de l'exécution de l'algorithme
+	 *
+	 * @return previous Hashable, previous(s) donnant le père de s dans le plus court chemin (r,s)
+	 */
 	public static PreviousInterface dijkstra(final GraphInterface g, final VertexInterface r) {
 		final ASet aSet = new ASet();
 		final Pi pi = new Pi();
