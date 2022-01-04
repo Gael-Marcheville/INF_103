@@ -2,16 +2,16 @@ package interface_graphique;
 
 import javax.swing.* ;
 
-public class DrawingMenuBar extends JMenuBar
+public class MazeMenuBar extends JMenuBar
 {
 
 	private final FileMenu fileMenu ;
 	
-	public DrawingMenuBar(DrawingApp drawingApp)
+	public MazeMenuBar(MazeApp mazeApp)
 	{
 		super() ;
 		
 		// Create and add menus
-		add(fileMenu = new FileMenu(drawingApp)) ;
+		add(fileMenu = new FileMenu(mazeApp)) ;
 	}
 }

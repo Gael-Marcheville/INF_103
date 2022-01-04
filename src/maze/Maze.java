@@ -30,6 +30,22 @@ public class Maze implements GraphInterface {
 		}
 	}
 	/**
+	 * Renvoie la hauteur du labyrinthe
+	 *
+	 * @return int hauteur du labyrinthe
+	 */
+	public int getHeight() {
+		return maze.length;
+	}
+	/**
+	 * Renvoie la largeur du labyrinthe, on suppose que le labyrinthe est bien formé
+	 *
+	 * @return int largeur du labyrinthe
+	 */
+	public int getWeight() { 
+		return maze[0].length;
+	}
+	/**
 	 * Renvoie le noeud du graphe d'abscisse x et d'ordonné y
 	 *
 	 * @param x abscisse du noeud

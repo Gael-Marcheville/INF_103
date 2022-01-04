@@ -4,7 +4,7 @@ import java.io.FileNotFoundException;
 
 import Interfaces.PreviousInterface;
 import dijkstra.Dijkstra;
-import interface_graphique.DrawingApp;
+import interface_graphique.MazeApp;
 import interface_graphique.QuitMenuItem;
 import maze.MBox;
 import maze.Maze;
@@ -37,8 +37,8 @@ public class MainTest {
 			solution.saveToTextFile("data/labyrinthe2.txt");
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		new DrawingApp();
+		} 
+		new MazeApp(solution);
 	}
 
 }

@@ -4,13 +4,13 @@ import javax.swing.* ;
 
 public class QuitMenuItem extends JMenuItem
 {
-   private final DrawingApp drawingApp ;
+   private final MazeApp mazeApp ;
 
-   public QuitMenuItem(DrawingApp drawingApp)
+   public QuitMenuItem(MazeApp mazeApp)
    {
       super("Quit") ; // Text of menu item
 
-      this.drawingApp = drawingApp ;
+      this.mazeApp = mazeApp ;
    }
 
 }
