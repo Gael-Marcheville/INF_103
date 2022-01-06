@@ -6,9 +6,9 @@ public class QuitMenuItem extends JMenuItem
 {
    private final MazeApp mazeApp ;
 
-   public QuitMenuItem(MazeApp mazeApp)
+   public QuitMenuItem(final MazeApp mazeApp)
    {
-      super("Quit") ; // Text of menu item
+      super("Quit") ; 
 
       this.mazeApp = mazeApp ;
    }

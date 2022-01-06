@@ -9,12 +9,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import Interfaces.GraphInterface;
+import Interfaces.PreviousInterface;
 import Interfaces.VertexInterface;
+import dijkstra.Dijkstra;
 
 public class Maze implements GraphInterface {
 
 	private MBox[][] maze; // on implémente le labyrinthe comme une matrice de dim 2, n'est pas private car
 							// besoin modifier le tableau dans le init et dans le initFromTextFile
+	/**
+	 * Renvoie un objet Maze initialisé avec une matrice de MBox[0][0]
+	 *
+	 */
+	public Maze() {
+		maze = new MBox[0][0];
+	}
 
 	/**
 	 * Renvoie un objet Maze initialisé avec une matrice de MBox init
@@ -28,6 +37,22 @@ public class Maze implements GraphInterface {
 		for (int k = 0; k < n; k++) { // évite les copies superficielles de init
 			maze[k] = Arrays.copyOf(init[k], init[k].length);
 		}
+	}
+	/**
+	 * Renvoie une copie non superficielle du labyrinthe
+	 *
+	 * @return copie non superficielle du labyrinthe
+	 */
+	public Maze copy() {
+		final int n = this.getHeight();
+		final int m = this.getWeight(); 
+		Maze copy = new Maze(new MBox[n][m]);
+		for (int k = 0; k < n; k++) { 
+			for (int j = 0; j < m; j++) {
+				copy.setBox(k, j, this.getBox(k, j));
+			}
+		}
+		return copy;
 	}
 	/**
 	 * Renvoie la hauteur du labyrinthe
@@ -186,6 +211,30 @@ public class Maze implements GraphInterface {
 		}
 	}
 	/**
+	 * Renvoie le labyrinthe résolu sans modifier l'original
+	 *
+	 * @return labyrinthe résolu
+	 */
+	public final Maze solveMaze() throws Exception {
+		Maze solution = this.copy();
+		final MBox d = this.getStart();
+		final MBox a = this.getEnd();
+		final PreviousInterface previous = Dijkstra.dijkstra(this, d);
+		MBox t = (MBox) previous.value(a); 
+		while (t != d && t != null) {
+			final int x = t.getX();
+			final int y = t.getY();
+			solution.setBox(x, y, new PBox(x, y, solution));
+			t = (MBox) previous.value(t);
+		}
+		if (t == null) {
+			return null;
+		}
+		return solution;
+		
+	}
+	
+	/**
 	 * Change le labyrinthe en l'initialisant à partir d'un fichier texte
 	 *
 	 * @param fileName fichier texte d'initialisation
@@ -211,7 +260,7 @@ public class Maze implements GraphInterface {
 			while ((strCurrentLine = bufferedreader.readLine()) != null) {
 				if (strCurrentLine.length() != columnNumber) { // provoque une erreur si le labyrinthe n'est pas
 																// rectangulaire
-					throw new MazeReadingException(fileName, i, "le labyrinthe n'est pas rectangulaire");
+					throw new MazeReadingException(fileName, i, "the Maze is not a rectangle");
 				}
 				i += 1;
 			}
@@ -241,22 +290,22 @@ public class Maze implements GraphInterface {
 						d = true;
 					} // si la boite est de type DBox, on ajoute une DBox
 					else if (sBox == 'A' && a) {
-						throw new MazeReadingException(fileName, i, "Il y a deux caractères A, il en faut un unique");
+						throw new MazeReadingException(fileName, i, "There are two arrivals or more in the file. Only one is required.");
 					} // provoque une erreur si le fichier texte contient deux A
 					else if (sBox == 'D' && d) {
-						throw new MazeReadingException(fileName, i, "Il y a deux caractères D, il en faut un unique");
+						throw new MazeReadingException(fileName, i, "There are two departures or more in the file. Only one is required.");
 					} // provoque une erreur si le fichier texte contient deux D
 					else {
-						throw new MazeReadingException(fileName, i, "Il y a un caractère différent de A,E,W ou D");
+						throw new MazeReadingException(fileName, i, "A letter in the file is not recognized. The recognized letters are A,E,W and D");
 					} // provoque une erreur si le fichier texte contient autre chose que A,E,W ou D
 				}
 				i += 1;
 			}
 			if (!a) {
-				throw new MazeReadingException(fileName, i, "Il n'y a pas de A, il en faut un unique");
+				throw new MazeReadingException(fileName, i, "There is no arrival in the file. One is required.");
 			} // provoque une erreur si le fichier texte ne contient pas de A
 			if (!d) {
-				throw new MazeReadingException(fileName, i, "Il n'y a pas de D, il en faut un unique");
+				throw new MazeReadingException(fileName, i, "There is no departure in the file. One is required.");
 			} // provoque une erreur si le fichier texte ne contient pas de D
 		} catch (IOException e) {
 			e.printStackTrace();

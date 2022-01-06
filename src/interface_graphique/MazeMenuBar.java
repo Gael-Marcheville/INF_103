@@ -7,7 +7,7 @@ public class MazeMenuBar extends JMenuBar
 
 	private final FileMenu fileMenu ;
 	
-	public MazeMenuBar(MazeApp mazeApp)
+	public MazeMenuBar(final MazeApp mazeApp)
 	{
 		super() ;
 		

@@ -17,14 +17,15 @@ public class MazePanel extends JPanel
 	private final Color DBoxColor = Color.GREEN;
 	private final Color WBoxColor = Color.BLACK;
 	private final Color PBoxColor = Color.YELLOW;
+	private final Color GBoxColor = Color.BLUE;
 	
 	
-	public MazePanel(MazeApp mazeApp, Maze maze)
+	public MazePanel(final MazeApp mazeApp, final Maze maze)
 	{
 		setLayout(new GridLayout(maze.getHeight(),maze.getWeight())) ; 
-		ArrayList<VertexInterface> allVertices = maze.getAllVertices();
+		final ArrayList<VertexInterface> allVertices = maze.getAllVertices();
 		for (VertexInterface x : allVertices) {
-			String type = ((MBox) x).getType();
+			final String type = ((MBox) x).getType();
 			switch (type) {
 				case "E":
 					add(new MBoxPanel (mazeApp,EBoxColor));
@@ -41,6 +42,8 @@ public class MazePanel extends JPanel
 				case ".":
 					add(new MBoxPanel (mazeApp,PBoxColor));	
 					break;
+				case "G":
+					add(new MBoxPanel (mazeApp,GBoxColor));
 				default :
 					add(new MBoxPanel (mazeApp,MBoxColor));	
 					break;
