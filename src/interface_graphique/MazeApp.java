@@ -10,6 +10,7 @@ public class MazeApp extends JFrame
 	private final MazeMenuBar mazeMenuBar ;
 	private Maze maze;
 	private boolean buildMode;
+	private String buildModeType;
 	
 	public MazeApp(final Maze maze)
 	{
@@ -40,10 +41,19 @@ public class MazeApp extends JFrame
 	
 	public void setBuildMode(final boolean buildMode) {
 		this.buildMode = buildMode;
+		this.buildModeType = "W";
 	}
 	
 	public boolean getBuildMode() {
 		return this.buildMode; 
+	}
+	
+	public void setBuildModeType(final String buildModeType) {
+		this.buildModeType = buildModeType;
+	}
+	
+	public String getBuildModeType() {
+		return this.buildModeType; 
 	}
 
 }
