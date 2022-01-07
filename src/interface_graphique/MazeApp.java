@@ -9,22 +9,15 @@ public class MazeApp extends JFrame
 {
 	private final MazeMenuBar mazeMenuBar ;
 	private Maze maze;
+	private boolean buildMode;
 	
 	public MazeApp(final Maze maze)
 	{
 		super("Maze Application") ;
 		this.maze = maze;
-		
+		this.buildMode = false;
 		setJMenuBar(mazeMenuBar = new MazeMenuBar(this)) ;
-		
-		setContentPane(new WindowPanel(this,this.maze)) ; //on ne définie pas la variable windowPanel car elle doit pouvoir changer si on charge un nouveau maze
-		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE) ; 
-		final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		pack();
-		setSize(screenSize.width,screenSize.height);
-		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		setVisible(true) ;
+		this.setMaze(this.maze, true);
 	}
 	
 	public void setMaze(final Maze newMaze, final Boolean changeThisMaze)
@@ -43,6 +36,14 @@ public class MazeApp extends JFrame
 	
 	public Maze getMaze() {
 		return this.maze;
+	}
+	
+	public void setBuildMode(final boolean buildMode) {
+		this.buildMode = buildMode;
+	}
+	
+	public boolean getBuildMode() {
+		return this.buildMode; 
 	}
 
 }
