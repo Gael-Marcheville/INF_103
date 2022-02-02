@@ -11,6 +11,8 @@ public class MazeApp extends JFrame
 	private Maze maze;
 	private boolean buildMode;
 	private String buildModeType;
+	private boolean solveMode;
+	
 	
 	public MazeApp(final Maze maze)
 	{
@@ -19,10 +21,16 @@ public class MazeApp extends JFrame
 		this.buildMode = false;
 		setJMenuBar(mazeMenuBar = new MazeMenuBar(this)) ;
 		this.setMaze(this.maze, true);
+		this.solveMode = false;
 	}
 	
-	public void setMaze(final Maze newMaze, final Boolean changeThisMaze)
+	public void setMaze(Maze newMaze, final Boolean changeThisMaze)
 	{	
+		if(solveMode) {try {
+			newMaze = newMaze.solveMaze();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}}
 		setContentPane(new WindowPanel(this,newMaze)) ;
 		if (changeThisMaze) {
 		this.maze = newMaze;
@@ -54,6 +62,14 @@ public class MazeApp extends JFrame
 	
 	public String getBuildModeType() {
 		return this.buildModeType; 
+	}
+	
+	public boolean getSolveMode() {
+		return this.solveMode;
+	}
+	
+	public void setSolveMode(boolean solveMode) {
+		this.solveMode = solveMode;
 	}
 
 }

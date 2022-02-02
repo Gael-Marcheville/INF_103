@@ -11,8 +11,10 @@ import Interfaces.VertexInterface;
 import maze.ABox;
 import maze.DBox;
 import maze.EBox;
+import maze.GBox;
 import maze.MBox;
 import maze.Maze;
+import maze.PBox;
 import maze.WBox;
 
 public class MazePanel extends JPanel
@@ -31,32 +33,14 @@ public class MazePanel extends JPanel
 		setLayout(new GridLayout(maze.getHeight(),maze.getWeight())) ; 
 		final ArrayList<VertexInterface> allVertices = maze.getAllVertices();
 		for (VertexInterface x : allVertices) {
-			final String type = ((MBox) x).getType();
 			final Color BoxColor;
-			switch (type) {
-				case "E":
-					BoxColor = EBoxColor;
-					break;
-				case "A":
-					BoxColor = ABoxColor;
-					break;
-				case "D":
-					BoxColor = DBoxColor;
-					break;
-				case "W":
-					BoxColor = WBoxColor;	
-					break;
-				case ".":
-					BoxColor = PBoxColor;
-					break;
-				case "G":
-					BoxColor = GBoxColor;
-					break;
-				default :
-					BoxColor = MBoxColor;	
-					break;
-			}
-			
+			if (x instanceof EBox) {BoxColor = EBoxColor;}
+			else if (x instanceof ABox) {BoxColor = ABoxColor;}
+			else if (x instanceof DBox) {BoxColor = DBoxColor;}
+			else if (x instanceof WBox) {BoxColor = WBoxColor;}
+			else if (x instanceof PBox) {BoxColor = PBoxColor;}
+			else if (x instanceof GBox) {BoxColor = GBoxColor;}
+			else {BoxColor = MBoxColor;}
 			
 			if(mazeApp.getBuildMode()) {
 				EditableMBoxPanel newMBoxPanel = new EditableMBoxPanel (mazeApp,BoxColor);
@@ -72,33 +56,22 @@ public class MazePanel extends JPanel
 						  int dY = maze.getStart().getY();
 				  	  	  int aX = maze.getEnd().getX();
 				  	  	  int aY = maze.getEnd().getY();
-				  	  	  switch (type + mazeApp.getBuildModeType()) {
-				  	  	  	case ("EW") :
-				  	  	  		maze.setBox(X, Y, new WBox(X,Y,maze));
-				  	  	  		break;
-				  	  	  	case ("WE") :
-				  	  	  		maze.setBox(X, Y, new EBox(X,Y,maze));
-				  	  	  		break;
-				  	  	  	case ("ED") :
-				  	  	  		maze.setBox(X, Y, new DBox(X,Y,maze));
-				  	  	  		maze.setBox(dX, dY, new EBox(dX,dY,maze));
-			  	  	  			break;
-				  	  	  	case ("WD") :
-				  	  	  		maze.setBox(X, Y, new DBox(X,Y,maze));
-				  	  	  		maze.setBox(dX, dY, new WBox(dX,dY,maze));
-				  	  	  		break;
-				  	  	  	case ("EA") :
-				  	  	  		maze.setBox(X, Y, new ABox(X,Y,maze));
-			  	  	  			maze.setBox(aX, aY, new EBox(aX,aY,maze));
-			  	  	  			break;
-				  	  	  	case ("WA") :
-				  	  	  		maze.setBox(X, Y, new ABox(X,Y,maze));
-				  	  	  		maze.setBox(aX, aY, new WBox(aX,aY,maze));
-			  	  	  			break;
-				  	  	  		
-				  	  	  }
+				  	  	if (x instanceof EBox && mazeApp.getBuildModeType() == "W") {maze.setBox(X, Y, new WBox(X,Y,maze));}
+						else if (x instanceof WBox && mazeApp.getBuildModeType() == "E") {maze.setBox(X, Y, new EBox(X,Y,maze));}
+						else if (x instanceof EBox && mazeApp.getBuildModeType() == "D") {
+			  	  	  		maze.setBox(X, Y, new DBox(X,Y,maze));
+			  	  	  		maze.setBox(dX, dY, new EBox(dX,dY,maze));}
+						else if (x instanceof WBox && mazeApp.getBuildModeType() == "D") {
+			  	  	  		maze.setBox(X, Y, new DBox(X,Y,maze));
+			  	  	  		maze.setBox(dX, dY, new WBox(dX,dY,maze));}
+						else if (x instanceof EBox && mazeApp.getBuildModeType() == "A") {
+			  	  	  		maze.setBox(X, Y, new ABox(X,Y,maze));
+		  	  	  			maze.setBox(aX, aY, new EBox(aX,aY,maze));}
+						else if (x instanceof WBox && mazeApp.getBuildModeType() == "A") {
+			  	  	  		maze.setBox(X, Y, new ABox(X,Y,maze));
+			  	  	  		maze.setBox(aX, aY, new WBox(aX,aY,maze));}
 						  mazeApp.setMaze(maze, false);
-						  System.out.println(type + mazeApp.getBuildModeType());
+						  System.out.println(x.getClass().getName().charAt(5) + mazeApp.getBuildModeType());
 
 						} catch (Exception e1) {
 							e1.printStackTrace();

@@ -20,7 +20,7 @@ public class Previous implements PreviousInterface {
 	 * @param x Vertex
 	 * @return Vertex valeur de previous(s)
 	 */
-	public VertexInterface value(final VertexInterface x) {
+	public VertexInterface value(VertexInterface x) {
 		return previous.get(x);
 	}
 	/**
@@ -29,7 +29,7 @@ public class Previous implements PreviousInterface {
 	 * @param x Vertex
 	 * @param y Vertex nouvelle valeur de previous(x)
 	 */
-	public void changeValue(final VertexInterface x, final VertexInterface y) {
+	public void changeValue(VertexInterface x, VertexInterface y) {
 		previous.put(x, y);
 	}
 

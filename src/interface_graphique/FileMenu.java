@@ -42,7 +42,7 @@ public void actionPerformed(ActionEvent e) {
 	case "Load a Maze" :
 		loadMazeMenuItem.loadMaze();
 		break;
-	case "Build a Maze" :
+	case "Build a new Maze" :
 		buildMazeMenuItem.buildMaze();
 		break;
 	case "Save" :

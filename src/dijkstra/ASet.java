@@ -20,7 +20,7 @@ public class ASet implements ASetInterface {
 	 * @param s Vertex 
 	 * @return boolean Vrai si s est dans ASet, Faux sinon
 	 */
-	public boolean contains(final VertexInterface s) {
+	public boolean contains(VertexInterface s) {
 		return aSet.contains(s);
 	}
 	/**
@@ -28,7 +28,7 @@ public class ASet implements ASetInterface {
 	 *
 	 * @param s Vertex 
 	 */
-	public void add(final VertexInterface s) {
+	public void add(VertexInterface s) {
 		aSet.add(s);
 	}
 	/**
@@ -36,7 +36,7 @@ public class ASet implements ASetInterface {
 	 *
 	 * @param s Vertex 
 	 */
-	public void remove(final VertexInterface s) { //si s n'est pas dans ASet, cette fonction ne fait rien
+	public void remove(VertexInterface s) { //si s n'est pas dans ASet, cette fonction ne fait rien
 		aSet.remove(s);
 	}
 	/**

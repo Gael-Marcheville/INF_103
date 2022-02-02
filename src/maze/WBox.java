@@ -8,7 +8,7 @@ public class WBox extends MBox{
 	 * @param ypos ordonnée de la WBox
 	 * @param m Maze associé à la WBox
 	 */
-	public WBox(final int xpos, final int ypos, final Maze m) {
+	public WBox(int xpos, int ypos, Maze m) {
 		super(xpos, ypos, m);
 	}
 	/**
@@ -18,13 +18,5 @@ public class WBox extends MBox{
 	 */
 	public boolean isWall() { 
 		return true;	//les objets de cette classe sont des murs
-	}
-	/**
-	 * Renvoie le type de la Box, "W"
-	 *
-	 * @return String valant "W", le type de la Box
-	 */
-	public String getType() { 
-		return "W";	//renvoie le type de la classe en String
 	}
 }

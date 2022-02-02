@@ -10,7 +10,6 @@ import maze.Maze;
 
 public class ControlPanel extends JPanel
 {	
-	private final PlayButton playButton;
 	private final SolveButton solveButton;
 	private final MazeApp mazeApp;
 	
@@ -24,24 +23,22 @@ public class ControlPanel extends JPanel
         gbc.weightx = 1;
         gbc.weighty = 1;
         gbc.gridx = 1;
-		playButton = new PlayButton (this.mazeApp);
 		solveButton = new SolveButton (this.mazeApp);
-		add(playButton,gbc);	
-		add(solveButton,gbc);	
-		
-		playButton.addActionListener(new ActionListener()
-		{
-			  public void actionPerformed(final ActionEvent e)
-			  {  
-				  final Maze newMaze = mazeApp.getMaze();
-				  mazeApp.setMaze(newMaze,false);
-			  }
-			});
+		add(solveButton,gbc);
+		if(mazeApp.getSolveMode()) {solveButton.setText("Hide Solution");}
 		solveButton.addActionListener(new ActionListener()
 		{
 			  public void actionPerformed(ActionEvent e)
 			  {
-				  try {
+				  if (mazeApp.getSolveMode()) {
+					  mazeApp.setSolveMode(false);
+					  final Maze newMaze = mazeApp.getMaze();
+					  mazeApp.setMaze(newMaze,false);
+				  }
+				  else{
+					  mazeApp.setSolveMode(true);
+					  try {
+				  
 					final Maze newMaze = mazeApp.getMaze().solveMaze();
 					if (newMaze == null) {
 						JOptionPane.showMessageDialog(ControlPanel.this, "No Solution");
@@ -52,6 +49,7 @@ public class ControlPanel extends JPanel
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
+				  }
 			  }
 			});
 		

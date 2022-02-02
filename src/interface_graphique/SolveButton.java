@@ -12,4 +12,5 @@ public class SolveButton extends JButton
 		
 		this.mazeApp = mazeApp ;
 	}
+	
 }

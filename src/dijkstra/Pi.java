@@ -22,7 +22,7 @@ public class Pi implements PiInterface {
 	 *
 	 * @param g graphe sur lequel construire pi
 	 */
-	public void init(final GraphInterface g) { //initialisation de pi pour l'algo dijkstra
+	public void init(GraphInterface g) { //initialisation de pi pour l'algo dijkstra
 		final ArrayList<VertexInterface> allVertices = g.getAllVertices();
 		for(VertexInterface v: allVertices) {
 			pi.put(v,infty);
@@ -34,7 +34,7 @@ public class Pi implements PiInterface {
 	 * @param s Vertex
 	 * @return Double valeur de pi(s), éventuellement Infty
 	 */
-	public Double value(final VertexInterface s) {
+	public Double value(VertexInterface s) {
 		return pi.get(s);
 	}
 	/**
@@ -43,7 +43,7 @@ public class Pi implements PiInterface {
 	 * @param s Vertex
 	 * @param x nouvelle valeur de pi(s), éventuellement Infty
 	 */
-	public void changeValue(final VertexInterface s, final Double x) {
+	public void changeValue(VertexInterface s, Double x) {
 		pi.put(s, x);
 		
 	}

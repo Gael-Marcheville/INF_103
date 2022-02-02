@@ -20,7 +20,7 @@ public class Dijkstra {
 	 *
 	 * @return previous Hashable, previous(s) donnant le père de s dans le plus court chemin (r,s)
 	 */
-	private static PreviousInterface dijkstra(final GraphInterface g, final VertexInterface r, final ASetInterface a, final PiInterface pi, final PreviousInterface previous) {
+	private static PreviousInterface dijkstra(GraphInterface g, VertexInterface r, ASetInterface a, PiInterface pi, PreviousInterface previous) {
 		final ArrayList<VertexInterface> allVertices = g.getAllVertices();
 		a.add(r);
 		VertexInterface pivot = r;
@@ -64,7 +64,7 @@ public class Dijkstra {
 	 *
 	 * @return previous Hashable, previous(s) donnant le père de s dans le plus court chemin (r,s)
 	 */
-	public static PreviousInterface dijkstra(final GraphInterface g, final VertexInterface r) {
+	public static PreviousInterface dijkstra(GraphInterface g, VertexInterface r) {
 		final ASet aSet = new ASet();
 		final Pi pi = new Pi();
 		final Previous previous = new Previous();

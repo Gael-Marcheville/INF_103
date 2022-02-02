@@ -59,12 +59,4 @@ public class MBox implements VertexInterface {
 	public boolean isWall() { //dit si une MBox est un mur
 		return false;	//de base, une MBox n'est pas un mur
 	}
-	/**
-	 * Renvoie le type de la Box, par défaut "M"
-	 *
-	 * @return String valant le type de la Box, par défaut "M"
-	 */
-	public String getType() { 
-		return "M";	//renvoie le type de la classe en String, M signifiant que la case n'a pas de type définit
-	}
 }

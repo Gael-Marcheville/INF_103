@@ -15,7 +15,7 @@ public interface GraphInterface {
 	 * @param vertex sommet dont on veut les successeurs
 	 * @return ArrayList liste des sommets successeurs de vertex dans le Graphe
 	 */
-    public ArrayList<VertexInterface> getSuccessors(final VertexInterface vertex) ; //donne la liste des successeurs de vertex
+    public ArrayList<VertexInterface> getSuccessors(VertexInterface vertex) ; //donne la liste des successeurs de vertex
 	/**
 	 * Renvoie le poids de l'arête (src,dst)
 	 *
@@ -23,6 +23,6 @@ public interface GraphInterface {
 	 * @param dst arrivée de l'arête
 	 * @return Double poids de l'arête (src,dst), éventuellement Infty
 	 */
-    public Double getWeight(final VertexInterface src, final VertexInterface dst) ; //donne la distance entre s1 et s2
+    public Double getWeight(VertexInterface src, VertexInterface dst) ; //donne la distance entre s1 et s2
     
 }

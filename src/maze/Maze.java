@@ -15,7 +15,7 @@ import dijkstra.Dijkstra;
 
 public class Maze implements GraphInterface {
 
-	private MBox[][] maze; // on implémente le labyrinthe comme une matrice de dim 2, n'est pas private car
+	private MBox[][] maze; // on implémente le labyrinthe comme une matrice de dim 2, n'est pas final car
 							// besoin modifier le tableau dans le init et dans le initFromTextFile
 	/**
 	 * Renvoie un objet Maze initialisé avec une matrice de MBox[0][0]
@@ -30,7 +30,7 @@ public class Maze implements GraphInterface {
 	 *
 	 * @param init matrice de MBox
 	 */
-	public Maze(final MBox[][] init) {
+	public Maze(MBox[][] init) {
 		final int n = init.length;
 		final int m = init[0].length; // on suppose que maze[k].length a même valeur pour tout k
 		maze = new MBox[n][m];
@@ -77,7 +77,7 @@ public class Maze implements GraphInterface {
 	 * @param y ordonnée du noeud
 	 * @return Vertex d'abscisse x et d'ordonné y
 	 */
-	public MBox getBox(final int x, final int y) { // donne la valeur d'une case
+	public MBox getBox(int x, int y) { // donne la valeur d'une case
 		return maze[x][y];
 	}
 	/**
@@ -87,7 +87,7 @@ public class Maze implements GraphInterface {
 	 * @param y ordonnée du noeud 
 	 * @param boxValue nouvelle valeur du noeud
 	 */
-	public void setBox(final int x, final int y, final VertexInterface boxValue) { // change la valeur d'une case
+	public void setBox(int x, int y, VertexInterface boxValue) { // change la valeur d'une case
 		maze[x][y] = (MBox) boxValue;
 	}
 	/**
@@ -118,7 +118,7 @@ public class Maze implements GraphInterface {
 		int count = 0; //entier comptant le nombre de case départ pour gérer les exceptions
 		for (int k = 0; k < columnNumber; k++) {
 			for (int i = 0; i < rowNumber; i++) {
-				if (maze[k][i].getType() == "D") {
+				if (maze[k][i] instanceof DBox) {
 					depart = maze[k][i];
 					count += 1;
 				}
@@ -146,7 +146,7 @@ public class Maze implements GraphInterface {
 		int count = 0; //entier comptant le nombre de case départ pour gérer les exceptions
 		for (int k = 0; k < columnNumber; k++) {
 			for (int i = 0; i < rowNumber; i++) {
-				if (maze[k][i].getType() == "A") {
+				if (maze[k][i] instanceof ABox) {
 					arrivee = maze[k][i];
 					count += 1;
 				}
@@ -166,7 +166,7 @@ public class Maze implements GraphInterface {
 	 * @param  vertex un noeud du graphe réprésentant le labyrinthe
 	 * @return ArrayList contenant les successeurs de vertex
 	 */
-	public ArrayList<VertexInterface> getSuccessors(final VertexInterface vertex) {
+	public ArrayList<VertexInterface> getSuccessors(VertexInterface vertex) {
 		final MBox m = (MBox) vertex;
 		final int x = m.getX();
 		final int y = m.getY();
@@ -197,7 +197,7 @@ public class Maze implements GraphInterface {
 	 * @param dst sommet d'arrivée
 	 * @return double donnant le poids de l'arête (src,dst)
 	 */
-	public Double getWeight(final VertexInterface src, final VertexInterface dst) { // retourne 1 si il existe une
+	public Double getWeight(VertexInterface src, VertexInterface dst) { // retourne 1 si il existe une
 																					// arrête entre srx et
 		// dst, 0 sinon
 		final ArrayList<VertexInterface> srcsuccessors = getSuccessors(src);
@@ -240,7 +240,7 @@ public class Maze implements GraphInterface {
 	 * @param fileName fichier texte d'initialisation
 	 * @throws MazeReadingException Renvoie une erreur en cas de non conformité du fichier d'initialisation
 	 */
-	public final void initFromTextFile(final String fileName) throws MazeReadingException { // permet de créer un
+	public final void initFromTextFile(String fileName) throws MazeReadingException { // permet de créer un
 																							// labyrinthe à
 		// partir d'un fichier texte
 		BufferedReader bufferedreader = null;
@@ -275,28 +275,34 @@ public class Maze implements GraphInterface {
 			while ((strCurrentLine = bufferedreader.readLine()) != null) {
 				for (int k = 0; k < columnNumber; k++) {
 					char sBox = strCurrentLine.charAt(k); // on récupère le type de boite
-					if (sBox == 'E') {
+					switch (sBox) {
+					case 'E' : // si la lettre est E, on ajoute une EBox
 						maze[i][k] = new EBox(i, k, this);
-					} // si la boite est de type EBox, on ajoute une EBox
-					else if (sBox == 'W') {
+						break;
+					case 'W' : // si la lettre est W, on ajoute une WBox
 						maze[i][k] = new WBox(i, k, this);
-					} // si la boite est de type WBox, on ajoute une WBox
-					else if (sBox == 'A' && !a) {
-						maze[i][k] = new ABox(i, k, this);
-						a = true;
-					} // si la boite est de type ABox, on ajoute une ABox
-					else if (sBox == 'D' && !d) {
-						maze[i][k] = new DBox(i, k, this);
-						d = true;
-					} // si la boite est de type DBox, on ajoute une DBox
-					else if (sBox == 'A' && a) {
-						throw new MazeReadingException(fileName, i, "There are two arrivals or more in the file. Only one is required.");
-					} // provoque une erreur si le fichier texte contient deux A
-					else if (sBox == 'D' && d) {
-						throw new MazeReadingException(fileName, i, "There are two departures or more in the file. Only one is required.");
-					} // provoque une erreur si le fichier texte contient deux D
-					else {
-						throw new MazeReadingException(fileName, i, "A letter in the file is not recognized. The recognized letters are A,E,W and D");
+						break;
+					
+					case 'A' :
+						if (a) { // provoque une erreur si le fichier texte contient deux A
+							throw new MazeReadingException(fileName, i, "There are two arrivals or more in the file. Only one is required.");
+						}
+						else { // si la lettre est A, on ajoute une ABox
+							maze[i][k] = new ABox(i, k, this);
+							a = true;
+						}
+						break;
+					case 'D' :
+						if (d) { // provoque une erreur si le fichier texte contient deux D
+							throw new MazeReadingException(fileName, i, "There are two departures or more in the file. Only one is required.");
+						}
+						else { // si la lettre est D, on ajoute une DBox
+							maze[i][k] = new DBox(i, k, this);
+							d = true;
+						}
+						break;
+					default :
+						throw new MazeReadingException(fileName, i, "One letter in the file is not recognized. The recognized letters are A,E,W and D");
 					} // provoque une erreur si le fichier texte contient autre chose que A,E,W ou D
 				}
 				i += 1;
@@ -326,7 +332,7 @@ public class Maze implements GraphInterface {
 	 * @param fileName fichier texte de sauvegarde du labyrinthe
 	 * @throws FileNotFoundException
 	 */
-	public final void saveToTextFile(final String fileName) throws FileNotFoundException { // permet de créer un fichier texte
+	public final void saveToTextFile(String fileName) throws FileNotFoundException { // permet de créer un fichier texte
 																						// à partir d'un labyrinthe
 		final PrintWriter printWriter = new PrintWriter(fileName);
 
@@ -336,7 +342,7 @@ public class Maze implements GraphInterface {
 			String ligne = "";
 			for (int i = 0; i < rowNumber; i++) {
 				final MBox SBox = maze[k][i];
-				ligne += SBox.getType();
+				ligne += SBox.getClass().getSimpleName().charAt(0);
 			}
 			printWriter.printf(ligne);
 			printWriter.println();
