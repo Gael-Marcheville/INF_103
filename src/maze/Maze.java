@@ -161,6 +161,27 @@ public class Maze implements GraphInterface {
 		return arrivee;
 	}
 	/**
+	 * Renvoie vrai si le labyrinthe contient une PBox
+	 * 
+	 * @return boolean true si il contient une PBox
+	 */
+	public boolean containsPBox() { // on suppose que le labyrinthe est bien formé (un unique départ), sinon garde
+		// la dernière case départ croisée
+		final int columnNumber = maze.length;
+		final int rowNumber = maze[0].length;
+		for (int k = 0; k < columnNumber; k++) {
+			for (int i = 0; i < rowNumber; i++) {
+				if (maze[k][i] instanceof PBox) {return true;}
+			}
+		}
+		return false;
+}
+	
+	
+	
+	
+	
+	/**
 	 * Renvoie la liste des noeuds enfants d'un noeud du graphe
 	 *
 	 * @param  vertex un noeud du graphe réprésentant le labyrinthe
@@ -279,6 +300,9 @@ public class Maze implements GraphInterface {
 					case 'E' : // si la lettre est E, on ajoute une EBox
 						maze[i][k] = new EBox(i, k, this);
 						break;
+					case 'P' : // si la lettre est P, on ajoute une PBox
+						maze[i][k] = new PBox(i, k, this);
+						break;
 					case 'W' : // si la lettre est W, on ajoute une WBox
 						maze[i][k] = new WBox(i, k, this);
 						break;
@@ -302,7 +326,7 @@ public class Maze implements GraphInterface {
 						}
 						break;
 					default :
-						throw new MazeReadingException(fileName, i, "One letter in the file is not recognized. The recognized letters are A,E,W and D");
+						throw new MazeReadingException(fileName, i, sBox + " letter is in the file and is not recognized. The recognized letters are A,E,W and D");
 					} // provoque une erreur si le fichier texte contient autre chose que A,E,W ou D
 				}
 				i += 1;

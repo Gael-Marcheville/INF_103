@@ -1,27 +1,32 @@
-package interface_graphique;
+package ui.vue.menu.item;
+
+import java.awt.event.*;
+import java.io.FileNotFoundException;
 
 import javax.swing.* ;
 
-import maze.Maze;
 import maze.MazeReadingException;
 
-public class LoadMazeMenuItem extends JMenuItem
+public class LoadMazeMenuItem extends JMenuItem implements ActionListener
 {
-   private final MazeApp mazeApp ;
+   /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+private final ui.vue.MazeApp mazeApp ;
    private JFileChooser fc;
    private JTextField  directory = new JTextField(System.getProperty("user.home"), 35);
    private String choosedFile;
 
-   public LoadMazeMenuItem(final MazeApp mazeApp)
+   public LoadMazeMenuItem(final ui.vue.MazeApp mazeApp)
    {
       super("Load a Maze") ; // Text of menu item
-
       this.mazeApp = mazeApp ;
+	  addActionListener(this);
       
       
    }
-   
-   public void loadMaze() {
+   public void actionPerformed(ActionEvent evt){
 	    fc = new JFileChooser(directory.getText());
 		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		int returnVal = fc.showOpenDialog(LoadMazeMenuItem.this);
@@ -30,10 +35,12 @@ public class LoadMazeMenuItem extends JMenuItem
 			choosedFile = fc.getSelectedFile().getPath();
 			directory.setText(choosedFile);
 		} 
-		final Maze maze = new Maze();
 		try {
-			maze.initFromTextFile(choosedFile);
-			mazeApp.setMaze(maze,true);
+			try {
+				mazeApp.getMazeAppModel().importFromText(choosedFile);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
 		} catch (MazeReadingException e1) {
 			JOptionPane.showMessageDialog(LoadMazeMenuItem.this, e1);
 			e1.printStackTrace();

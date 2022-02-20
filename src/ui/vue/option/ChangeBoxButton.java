@@ -1,33 +1,32 @@
-package interface_graphique;
+package ui.vue.option;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-import maze.GBox;
-import maze.MBox;
-import maze.Maze;
+import ui.model.MazeAppModel;
 
 public class ChangeBoxButton extends JButton
 {
-	private final MazeApp mazeApp ;
-	private final Maze maze ;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private final ui.vue.MazeApp mazeApp ;
 	private final String name;
-	private GBox pos ; //position du joueur
 	
-	public ChangeBoxButton(final MazeApp mazeApp, final String name) 
+	public ChangeBoxButton(final ui.vue.MazeApp mazeApp, final String name) 
 	{   super(name);
 		this.name = name;
-		this.maze = mazeApp.getMaze().copy();
-		this.mazeApp = mazeApp ;
+		this.mazeApp = mazeApp;
+		final MazeAppModel mazeAppModel = this.mazeApp.getMazeAppModel();
 		final String type = this.getType();
-		
 		this.addActionListener(new ActionListener()
 		{
 			  public void actionPerformed(final ActionEvent e)
 			  {  
-				  mazeApp.setBuildModeType(type);
+				  mazeAppModel.setBuildModeType(type);
 			  }
 			});
 	}
