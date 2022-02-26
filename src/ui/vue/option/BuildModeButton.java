@@ -7,7 +7,7 @@ import javax.swing.*;
 
 import ui.model.MazeAppModel;
 
-public class BuildModeButton extends JButton
+public class BuildModeButton extends JButton implements ActionListener
 {
 	/**
 	 * 
@@ -19,15 +19,7 @@ public class BuildModeButton extends JButton
 	{
 		super("Join Build Mode") ; 
 		this.mazeApp = mazeApp ;
-		MazeAppModel mazeAppModel = mazeApp.getMazeAppModel();
-		
-		this.addActionListener(new ActionListener()
-		{
-			  public void actionPerformed(final ActionEvent e)
-			  {  if(mazeAppModel.isBuildMode()){mazeAppModel.setBuildMode(false);}
-			     else {mazeAppModel.setBuildMode(true);}
-			  }
-			});
+		this.addActionListener(this);
 	}
 		
 	
@@ -35,6 +27,15 @@ public class BuildModeButton extends JButton
 	public void notifyForUpdate() {
 		if (mazeApp.getMazeAppModel().isBuildMode()) {this.setText("Leave Build Mode");}
 		else {this.setText("Join Build Mode");}
+	}
+
+
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		MazeAppModel mazeAppModel = mazeApp.getMazeAppModel();
+		if(mazeAppModel.isBuildMode()){mazeAppModel.setBuildMode(false);}
+	    else {mazeAppModel.setBuildMode(true);}
 	}
 		
 	

@@ -13,7 +13,7 @@ public class LoadMazeMenuItem extends JMenuItem implements ActionListener
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-private final ui.vue.MazeApp mazeApp ;
+	private final ui.vue.MazeApp mazeApp ;
    private JFileChooser fc;
    private JTextField  directory = new JTextField(System.getProperty("user.home"), 35);
    private String choosedFile;

@@ -7,7 +7,7 @@ import javax.swing.*;
 
 import ui.model.MazeAppModel;
 
-public class ChangeBoxButton extends JButton
+public class ChangeBoxButton extends JButton implements ActionListener
 {
 	/**
 	 * 
@@ -20,31 +20,30 @@ public class ChangeBoxButton extends JButton
 	{   super(name);
 		this.name = name;
 		this.mazeApp = mazeApp;
-		final MazeAppModel mazeAppModel = this.mazeApp.getMazeAppModel();
-		final String type = this.getType();
-		this.addActionListener(new ActionListener()
-		{
-			  public void actionPerformed(final ActionEvent e)
-			  {  
-				  mazeAppModel.setBuildModeType(type);
-			  }
-			});
+		this.addActionListener(this);
 	}
 	
 	private String getType() {
 
 		switch (this.name) {
 			case "Empty Box":
-				return "E";
+				return "Empty";
 		case "Move Arrival":
-				return "A";
+				return "Arrival";
 			case "Move Departure":
-				return "D";
+				return "Departure";
 			case "Wall Box":
-				return "W";
+				return "Wall";
 			default :
 				return "M";
 	}
 	
 }
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		final MazeAppModel mazeAppModel = this.mazeApp.getMazeAppModel();
+		final String type = this.getType();
+		mazeAppModel.setBuildModeType(type);
+	}
 }

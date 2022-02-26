@@ -39,22 +39,20 @@ public class EditableMBoxPanel extends JButton {
 					  int dY = currentMaze.getStart().getY();
 			  	  	  int aX = currentMaze.getEnd().getX();
 			  	  	  int aY = currentMaze.getEnd().getY();
-			  	  	if (mBox instanceof EBox && mazeAppModel.getBuildModeType() == "W") {mazeAppModel.setBox(X, Y, new WBox(X,Y,currentMaze));}
-					else if (mBox instanceof WBox && mazeAppModel.getBuildModeType() == "E") {mazeAppModel.setBox(X, Y, new EBox(X,Y,currentMaze));}
-					else if (mBox instanceof EBox && mazeAppModel.getBuildModeType() == "D") {
+			  	  	if (mBox instanceof EBox && mazeAppModel.getBuildModeType() == "Wall") {mazeAppModel.setBox(X, Y, new WBox(X,Y,currentMaze));}
+					else if (mBox instanceof WBox && mazeAppModel.getBuildModeType() == "Empty") {mazeAppModel.setBox(X, Y, new EBox(X,Y,currentMaze));}
+					else if (mBox instanceof EBox && mazeAppModel.getBuildModeType() == "Departure") {
 		  	  	  		mazeAppModel.setBox(X, Y, new DBox(X,Y,currentMaze));
 		  	  	  		mazeAppModel.setBox(dX, dY, new EBox(dX,dY,currentMaze));}
-					else if (mBox instanceof WBox && mazeAppModel.getBuildModeType() == "D") {
+					else if (mBox instanceof WBox && mazeAppModel.getBuildModeType() == "Departure") {
 		  	  	  		mazeAppModel.setBox(X, Y, new DBox(X,Y,currentMaze));
 		  	  	  		mazeAppModel.setBox(dX, dY, new WBox(dX,dY,currentMaze));}
-					else if (mBox instanceof EBox && mazeAppModel.getBuildModeType() == "A") {
+					else if (mBox instanceof EBox && mazeAppModel.getBuildModeType() == "Arrival") {
 		  	  	  		mazeAppModel.setBox(X, Y, new ABox(X,Y,currentMaze));
 	  	  	  			mazeAppModel.setBox(aX, aY, new EBox(aX,aY,currentMaze));}
-					else if (mBox instanceof WBox && mazeAppModel.getBuildModeType() == "A") {
+					else if (mBox instanceof WBox && mazeAppModel.getBuildModeType() == "Arrival") {
 		  	  	  		mazeAppModel.setBox(X, Y, new ABox(X,Y,currentMaze));
 		  	  	  		mazeAppModel.setBox(aX, aY, new WBox(aX,aY,currentMaze));}
-					  mazeAppModel.setCurrentMaze(currentMaze);
-					  System.out.println(mBox.getClass().getName().charAt(5) + mazeAppModel.getBuildModeType());
 
 					} catch (Exception e1) {
 						e1.printStackTrace();

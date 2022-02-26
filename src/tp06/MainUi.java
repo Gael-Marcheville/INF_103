@@ -2,17 +2,17 @@ package tp06;
 
 import java.io.IOException;
 
+import maze.MazeReadingException;
 import ui.vue.MazeApp;
 
 public class MainUi {
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		MazeApp res = new MazeApp("data/petitlab.txt");
 		try {
-			res.getMazeAppModel().export();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			MazeApp res = new MazeApp("data/petitlab.txt");
+		} catch (IOException | MazeReadingException e) {
+			// le fichier n'existe pas
 			e.printStackTrace();
 		}
 	}

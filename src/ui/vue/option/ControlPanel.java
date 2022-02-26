@@ -17,6 +17,7 @@ public class ControlPanel extends JPanel {
 	private GridBagLayout layout;
 	private final GridBagConstraints gbc;
 	private final SolveButton solveButton;
+	private final ResetButton resetButton;
 	final BuildModeButton buildModeButton;
 	
 	public ControlPanel(final MazeApp mazeApp)
@@ -31,6 +32,7 @@ public class ControlPanel extends JPanel {
         gbc.gridx = 1;
         solveButton = new SolveButton (this.mazeApp);
 		buildModeButton = new BuildModeButton(this.mazeApp);
+		resetButton = new ResetButton(this.mazeApp);
         fillPanel();
 		
 	}
@@ -48,8 +50,8 @@ public class ControlPanel extends JPanel {
 			add(endButton,gbc);
 		}
 			
-		else {add(solveButton,gbc);}
-			
+		else {add(resetButton,gbc);
+			  add(solveButton,gbc);}		
 		add(buildModeButton,gbc);
 		
 	}

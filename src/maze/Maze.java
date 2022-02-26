@@ -160,26 +160,6 @@ public class Maze implements GraphInterface {
 		}
 		return arrivee;
 	}
-	/**
-	 * Renvoie vrai si le labyrinthe contient une PBox
-	 * 
-	 * @return boolean true si il contient une PBox
-	 */
-	public boolean containsPBox() { // on suppose que le labyrinthe est bien formé (un unique départ), sinon garde
-		// la dernière case départ croisée
-		final int columnNumber = maze.length;
-		final int rowNumber = maze[0].length;
-		for (int k = 0; k < columnNumber; k++) {
-			for (int i = 0; i < rowNumber; i++) {
-				if (maze[k][i] instanceof PBox) {return true;}
-			}
-		}
-		return false;
-}
-	
-	
-	
-	
 	
 	/**
 	 * Renvoie la liste des noeuds enfants d'un noeud du graphe
@@ -250,6 +230,23 @@ public class Maze implements GraphInterface {
 		}
 		if (t == null) {
 			return null;
+		}
+		return solution;
+		
+	}
+	/**
+	 * Renvoie le labyrinthe original, non résolu
+	 *
+	 * @return labyrinthe original
+	 */
+	public final Maze unsolveMaze() throws Exception {
+		Maze solution = this.copy();
+		final int columnNumber = maze.length;
+		final int rowNumber = maze[0].length;
+		for (int k = 0; k < columnNumber; k++) {
+			for (int i = 0; i < rowNumber; i++) {
+				if (maze[k][i] instanceof PBox) {solution.setBox(k, i, new EBox(k,i,solution));}
+			}
 		}
 		return solution;
 		

@@ -20,7 +20,6 @@ public class WindowPanel extends JPanel {
 	public WindowPanel(MazeApp mazeApp) throws IOException {
 	
 		setLayout(new BorderLayout());
-		
 		add(boxesPanel = new BoxesPanel(mazeApp), BorderLayout.CENTER);
 		add(controlPanel = new ControlPanel(mazeApp), BorderLayout.LINE_END);
 
