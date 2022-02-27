@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import javax.swing.* ;
 
 import maze.MazeReadingException;
+import ui.model.MazeAppModel;
 
 public class LoadMazeMenuItem extends JMenuItem implements ActionListener
 {
@@ -14,9 +15,9 @@ public class LoadMazeMenuItem extends JMenuItem implements ActionListener
 	 */
 	private static final long serialVersionUID = 1L;
 	private final ui.vue.MazeApp mazeApp ;
-   private JFileChooser fc;
-   private JTextField  directory = new JTextField(System.getProperty("user.home"), 35);
-   private String choosedFile;
+    private JFileChooser fc;
+    private JTextField  directory = new JTextField(System.getProperty("user.home"), 35);
+    private String choosedFile;
 
    public LoadMazeMenuItem(final ui.vue.MazeApp mazeApp)
    {
@@ -27,9 +28,11 @@ public class LoadMazeMenuItem extends JMenuItem implements ActionListener
       
    }
    public void actionPerformed(ActionEvent evt){
+	    final MazeAppModel mazeAppModel = mazeApp.getMazeAppModel();
+	    if(!mazeAppModel.isSaved()) {mazeAppModel.export_with_warning();}
 	    fc = new JFileChooser(directory.getText());
 		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		int returnVal = fc.showOpenDialog(LoadMazeMenuItem.this);
+		final int returnVal = fc.showOpenDialog(LoadMazeMenuItem.this);
 		if (returnVal == JFileChooser.APPROVE_OPTION) 
 		{
 			choosedFile = fc.getSelectedFile().getPath();

@@ -9,7 +9,6 @@ import javax.swing.JFrame;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import maze.MazeReadingException;
 import ui.model.MazeAppModel;
 import ui.vue.menu.MazeMenuBar;
 
@@ -23,11 +22,11 @@ public class MazeApp extends JFrame implements ChangeListener{
 	private final Dimension screenSize;
 	private final WindowPanel windowPanel;
 	private final MazeMenuBar mazeMenuBar ;
-	private String fileName;
+	private final String fileName;
 	private MazeAppModel mazeAppModel;
 
 	
-	public MazeApp(String fileName) throws IOException, MazeReadingException {
+	public MazeApp(String fileName) throws IOException {
 		super("Create your maze ! ");
 		this.fileName = fileName;
 		mazeAppModel = new MazeAppModel(fileName);

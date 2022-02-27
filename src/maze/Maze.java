@@ -350,13 +350,25 @@ public class Maze implements GraphInterface {
 	/**
 	 * Enregistre le labyrinthe dans un fichier texte
 	 *
-	 * @param fileName fichier texte de sauvegarde du labyrinthe
+	 * @param fileName nom du fichier texte de sauvegarde du labyrinthe
 	 * @throws FileNotFoundException
 	 */
 	public final void saveToTextFile(String fileName) throws FileNotFoundException { // permet de créer un fichier texte
 																						// à partir d'un labyrinthe
 		final PrintWriter printWriter = new PrintWriter(fileName);
+		saveToTextFile(printWriter);
+		printWriter.close();
 
+	}
+	
+	/**
+	 * Enregistre le labyrinthe dans un fichier texte
+	 *
+	 * @param file fichier texte de sauvegarde du labyrinthe
+	 * @throws FileNotFoundException
+	 */
+	public final void saveToTextFile(PrintWriter pwfile) throws FileNotFoundException { // permet de créer un fichier texte
+																						// à partir d'un labyrinthe
 		final int columnNumber = maze.length;
 		final int rowNumber = maze[0].length;
 		for (int k = 0; k < columnNumber; k++) {
@@ -365,10 +377,9 @@ public class Maze implements GraphInterface {
 				final MBox SBox = maze[k][i];
 				ligne += SBox.getClass().getSimpleName().charAt(0);
 			}
-			printWriter.printf(ligne);
-			printWriter.println();
+			pwfile.printf(ligne);
+			pwfile.println();
 		}
-		printWriter.close();
 
 	}
 }

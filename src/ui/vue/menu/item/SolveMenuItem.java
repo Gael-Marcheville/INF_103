@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JMenuItem;
 
+import ui.model.MazeAppModel;
 import ui.vue.MazeApp;
 
 public class SolveMenuItem extends JMenuItem implements ActionListener {
@@ -24,7 +25,8 @@ public class SolveMenuItem extends JMenuItem implements ActionListener {
 	
 	public void actionPerformed(ActionEvent evt) {
 		try {
-			mazeApp.getMazeAppModel().setSolveMode(!mazeApp.getMazeAppModel().isSolveMode());
+			final MazeAppModel mazeAppModel = mazeApp.getMazeAppModel();
+			mazeAppModel.setSolveMode(!mazeAppModel.isSolveMode());
 		} catch (Exception  e) {
 			e.printStackTrace();
 		}

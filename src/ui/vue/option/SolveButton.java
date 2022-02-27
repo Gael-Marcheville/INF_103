@@ -25,7 +25,7 @@ public class SolveButton extends JButton implements ActionListener
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		MazeAppModel mazeAppModel = mazeApp.getMazeAppModel();
+		final MazeAppModel mazeAppModel = mazeApp.getMazeAppModel();
 		if (mazeAppModel.isSolveMode()) {
 			  mazeAppModel.setSolveMode(false);
 		  }

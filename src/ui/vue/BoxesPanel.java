@@ -46,12 +46,12 @@ public class BoxesPanel extends JPanel{
 	
     private void fillGrid() throws IOException {
         this.removeAll();
-		MazeAppModel mazeAppModel = mazeApp.getMazeAppModel();
-		int width = mazeAppModel.getWidth();
-		int height = mazeAppModel.getHeight();	
+		final MazeAppModel mazeAppModel = mazeApp.getMazeAppModel();
+		final int width = mazeAppModel.getWidth();
+		final int height = mazeAppModel.getHeight();	
 		this.gridLayout = new GridLayout(height,width);
 		setLayout(gridLayout); 
-		Maze currentMaze = mazeAppModel.getCurrentMaze();
+		final Maze currentMaze = mazeAppModel.getCurrentMaze();
 		final ArrayList<VertexInterface> allVertices = currentMaze.getAllVertices();
 		for (VertexInterface x : allVertices) {
 			final Color BoxColor;
@@ -64,12 +64,10 @@ public class BoxesPanel extends JPanel{
 			else {BoxColor = MBoxColor;}
 			
 			if(mazeAppModel.isBuildMode()) {
-				EditableMBoxPanel newMBoxPanel = new EditableMBoxPanel (mazeApp,BoxColor, (MBox) x);
-				add(newMBoxPanel);
+				add(new EditableMBoxPanel (mazeApp,BoxColor, (MBox) x));
 			}
 			else {
-				MBoxPanel newMBoxPanel = new MBoxPanel (mazeApp,BoxColor);
-				add(newMBoxPanel);
+				add(new MBoxPanel (mazeApp,BoxColor));
 				
 			}
 		}
@@ -78,7 +76,7 @@ public class BoxesPanel extends JPanel{
     }
 
 	public void notifyForUpdate() throws IOException {
-		MazeAppModel mazeAppModel = mazeApp.getMazeAppModel();
+		final MazeAppModel mazeAppModel = mazeApp.getMazeAppModel();
 		if(mazeAppModel.isModified()) {
 			fillGrid();
 		}

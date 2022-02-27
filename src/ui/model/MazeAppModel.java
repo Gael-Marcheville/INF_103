@@ -1,10 +1,9 @@
 package ui.model;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
@@ -29,7 +28,7 @@ public class MazeAppModel {
 	private boolean buildMode;
 	private boolean solveMode;
 	private String buildModeType = "Wall";
-	private ArrayList<ChangeListener> listeners = new ArrayList<ChangeListener>();
+	private final ArrayList<ChangeListener> listeners = new ArrayList<ChangeListener>();
 	
 	public MazeAppModel(String initFileName) {
 		modified = false;
@@ -38,7 +37,7 @@ public class MazeAppModel {
 		try {
 			currentMaze.initFromTextFile(initFileName);
 		} catch (MazeReadingException e) {
-			// ceci n'est pas un maze
+			reset(5,5);
 		}
 		width = currentMaze.getWeight();
 		height = currentMaze.getHeight();
@@ -47,7 +46,7 @@ public class MazeAppModel {
 	}
 	
 	public void stateChanges() {
-		ChangeEvent evt = new ChangeEvent(this);
+		final ChangeEvent evt = new ChangeEvent(this);
 		for(ChangeListener listener : listeners) {
 			listener.stateChanged(evt);
 		}
@@ -61,8 +60,8 @@ public class MazeAppModel {
 	public int getWidth() {return width;}
 	public int getHeight() {return height;}
 	public Maze getCurrentMaze() {return currentMaze;}
-	public void setCurrentMaze(Maze m) {
-		this.currentMaze = m;
+	public void setCurrentMaze(Maze currentMaze) {
+		this.currentMaze = currentMaze;
 		height = currentMaze.getHeight();
 		width = currentMaze.getWeight();
 		modified = true;
@@ -80,36 +79,59 @@ public class MazeAppModel {
 		return modified;
 	}
 	
+	public boolean isSaved() {
+		return saved;
+	}
 	
-	public boolean export() {
+	
+	public void export() {
 		if(solveMode) {setSolveMode(false);}
-		String filename = JOptionPane.showInputDialog("Name this file");
-        JFileChooser savefile = new JFileChooser();
-        savefile.setSelectedFile(new File(filename));
-        int sf = savefile.showSaveDialog(null);
+		String fileName = JOptionPane.showInputDialog(null,"Name this maze","Save",JOptionPane.INFORMATION_MESSAGE);
+        final JFileChooser saveFile = new JFileChooser();
+        saveFile.setSelectedFile(new File(fileName));
+        final PrintWriter pwfile;
+        final int sf = saveFile.showSaveDialog(null);
         if(sf == JFileChooser.APPROVE_OPTION){
             try {
-        		currentMaze.saveToTextFile(filename);
-                JOptionPane.showMessageDialog(null, "File has been saved","File Saved",JOptionPane.INFORMATION_MESSAGE);
-        	    return true;
-
+            	pwfile = new PrintWriter(saveFile.getSelectedFile());
+                currentMaze.saveToTextFile(pwfile);
+                pwfile.close();
+                JOptionPane.showMessageDialog(null, "Maze has been saved","Maze Saved",JOptionPane.INFORMATION_MESSAGE);
+        	    saved = true;
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }else if(sf == JFileChooser.CANCEL_OPTION){
-            JOptionPane.showMessageDialog(null, "File save has been canceled");
+            JOptionPane.showMessageDialog(null, "Maze save has been canceled","Maze not save",JOptionPane.INFORMATION_MESSAGE);
         }
-        return false;
 	}
-
+	
+	public void export_with_warning() {
+		final int response = JOptionPane.showOptionDialog(null, "Maze not saved. Export it?", "Maze not save", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, null, null);
+		switch(response) {
+		case JOptionPane.CANCEL_OPTION :
+			return ;
+		case JOptionPane.OK_OPTION :
+			try {
+				export();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			break;
+		case JOptionPane.NO_OPTION :
+			break;
+		}
+	    saved = true;
+	}
+	
+	
 	public void reset(int nwidth,int nheight) {
-		if(saved || export()) {
-		this.width = nwidth ;
-		this.height = nheight ; 
+		if(saved) {
 		this.buildModeType = "Wall" ;
 		setBuildMode(false);
 		setSolveMode(false);
-		Maze newMaze = new Maze(new MBox[nheight][nwidth]);
+		saved = false;
+		final Maze newMaze = new Maze(new MBox[nheight][nwidth]);
 		for(int i = 0 ; i<nheight ; i++) {
 			for(int j = 0 ; j< nwidth ; j++) {
 				newMaze.setBox(i,j,new WBox(i , j, newMaze));
@@ -123,7 +145,8 @@ public class MazeAppModel {
 	}
 	
 	public void importFromText(String fileName) throws FileNotFoundException, MazeReadingException {
-		Maze m = new Maze();
+		if(!saved) {export_with_warning();}
+		final Maze m = new Maze();
 		m.initFromTextFile(fileName);
 		this.setCurrentMaze(m);
 	}

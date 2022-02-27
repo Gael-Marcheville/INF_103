@@ -33,7 +33,7 @@ public class BuildModeButton extends JButton implements ActionListener
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		MazeAppModel mazeAppModel = mazeApp.getMazeAppModel();
+		final MazeAppModel mazeAppModel = mazeApp.getMazeAppModel();
 		if(mazeAppModel.isBuildMode()){mazeAppModel.setBuildMode(false);}
 	    else {mazeAppModel.setBuildMode(true);}
 	}

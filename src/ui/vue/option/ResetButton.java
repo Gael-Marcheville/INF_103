@@ -24,14 +24,15 @@ public class ResetButton extends JButton implements ActionListener
 		
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		MazeAppModel mazeAppModel = mazeApp.getMazeAppModel();
+		final MazeAppModel mazeAppModel = mazeApp.getMazeAppModel();
+		if(!mazeAppModel.isSaved()) {mazeAppModel.export_with_warning();}
 		int width = 2;
 		int height = 2;
 		boolean parseIntSuccess = false;
 		boolean cancelled = false;
 		while(!parseIntSuccess && !cancelled) {
 			try {
-				final String inputWidth = JOptionPane.showInputDialog("Width : ");
+				final String inputWidth = JOptionPane.showInputDialog(null,"Width : ","Customize your Maze",JOptionPane.INFORMATION_MESSAGE);
 				if (inputWidth == null) {cancelled = true;}
 				else {
 				width = Integer.parseInt(inputWidth);
@@ -45,7 +46,7 @@ public class ResetButton extends JButton implements ActionListener
 		parseIntSuccess = false;
 		while(!parseIntSuccess && !cancelled) {
 			try {
-				final String inputHeight = JOptionPane.showInputDialog("Height : ");
+				final String inputHeight = JOptionPane.showInputDialog(null,"Height : ","Customize your Maze",JOptionPane.INFORMATION_MESSAGE);
 				if (inputHeight == null) {cancelled = true;}
 				else {
 				height = Integer.parseInt(inputHeight);
