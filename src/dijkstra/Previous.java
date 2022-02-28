@@ -6,14 +6,16 @@ import Interfaces.PreviousInterface;
 import Interfaces.VertexInterface;
 
 public class Previous implements PreviousInterface {
-	private final Hashtable<VertexInterface,VertexInterface> previous; 
+	private final Hashtable<VertexInterface, VertexInterface> previous;
+
 	/**
-	 * Renvoie un objet previous, Hashtable
+	 * Retourne un objet previous, Hashtable
 	 *
 	 */
-	public Previous(){
+	public Previous() {
 		previous = new Hashtable<VertexInterface, VertexInterface>();
 	}
+
 	/**
 	 * Renvoie la valeur previous(s)
 	 *
@@ -23,6 +25,7 @@ public class Previous implements PreviousInterface {
 	public VertexInterface value(VertexInterface x) {
 		return previous.get(x);
 	}
+
 	/**
 	 * Réalise l'affectation previous(x)=y
 	 *

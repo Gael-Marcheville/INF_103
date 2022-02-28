@@ -1,6 +1,10 @@
 module:tp06
 dijkstra
-interface_graphique
 Interfaces
 maze
 tp06
+ui.model
+ui.vue
+ui.vue.menu
+ui.vue.menu.item
+ui.vue.option

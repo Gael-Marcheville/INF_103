@@ -9,15 +9,17 @@ import ui.vue.MazeApp;
 
 public class QuitMenuItem extends JMenuItem implements ActionListener {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private final MazeApp mazeApp;
-	
+
+	/**
+	 * Retourne un Item destiné à quitter l'application MazeApp, pour FileMenu
+	 * 
+	 * @param mazeApp
+	 */
 	public QuitMenuItem(MazeApp mazeApp) {
-		super("Quit") ;
-		this.mazeApp = mazeApp ;
+		super("Quit");
+		this.mazeApp = mazeApp;
 		addActionListener(this);
 	}
 
@@ -25,6 +27,6 @@ public class QuitMenuItem extends JMenuItem implements ActionListener {
 		final MazeAppModel mazeAppModel = mazeApp.getMazeAppModel();
 		mazeAppModel.export_with_warning();
 		System.exit(0);
-	
+
 	}
 }

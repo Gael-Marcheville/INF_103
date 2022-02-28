@@ -1,7 +1,5 @@
 package ui.vue;
 
-import java.io.IOException;
-
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
@@ -12,23 +10,22 @@ import javax.swing.event.ChangeListener;
 import ui.model.MazeAppModel;
 import ui.vue.menu.MazeMenuBar;
 
+public class MazeApp extends JFrame implements ChangeListener {
 
-public class MazeApp extends JFrame implements ChangeListener{
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private final Dimension screenSize;
 	private final WindowPanel windowPanel;
-	private final MazeMenuBar mazeMenuBar ;
-	private final String fileName;
+	private final MazeMenuBar mazeMenuBar;
 	private MazeAppModel mazeAppModel;
 
-	
-	public MazeApp(String fileName) throws IOException {
+	/**
+	 * Retourne une nouvelle MazeApp en l'initialisant avec le fichier fileName. 5*5
+	 * 
+	 * @param fileName fichier de démarage correspondant à un Maze. Si le fichier
+	 *                 lève une MazeReadingException, un WallMaze 5*5 est créé
+	 */
+	public MazeApp(String fileName) {
 		super("Create your maze ! ");
-		this.fileName = fileName;
 		mazeAppModel = new MazeAppModel(fileName);
 		mazeMenuBar = new MazeMenuBar(this);
 		setJMenuBar(mazeMenuBar);
@@ -37,27 +34,30 @@ public class MazeApp extends JFrame implements ChangeListener{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		pack();
-		setSize(screenSize.width,screenSize.height);
+		setSize(screenSize.width, screenSize.height);
 		setVisible(true);
 	}
 
-	public String getFileName() {return this.fileName;}
-	
+	/**
+	 * Retourne le model associé à MazeApp
+	 * 
+	 * @return mazeAppModel
+	 */
 	public MazeAppModel getMazeAppModel() {
 		return mazeAppModel;
 	}
+
+	/**
+	 * Change le Model associé à MazeApp
+	 * 
+	 * @param mazeAppModel
+	 */
 	public void setMazeAppModel(MazeAppModel mazeAppModel) {
 		this.mazeAppModel = mazeAppModel;
 	}
 
-
 	public void stateChanged(ChangeEvent evt) {
-		try {
-			windowPanel.notifyForUpdate();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		windowPanel.notifyForUpdate();
 	}
-	
+
 }

@@ -1,12 +1,13 @@
 package maze;
 
-public class PBox extends MBox { //box permettant de marquer le circuit
+public class PBox extends MBox {
 	/**
-	 * Renvoie un objet PBox, Point Box
+	 * Retourne un objet PBox, Point Box, qui permet de marquer le circuit pour le
+	 * résoudre.
 	 *
 	 * @param xpos abscisse de la PBox
 	 * @param ypos ordonnée de la PBox
-	 * @param m Maze associé à la PBox
+	 * @param m    Maze associé à la PBox
 	 */
 	public PBox(int xpos, int ypos, Maze m) {
 		super(xpos, ypos, m);

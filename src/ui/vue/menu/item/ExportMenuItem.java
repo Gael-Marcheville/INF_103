@@ -8,22 +8,24 @@ import javax.swing.JMenuItem;
 import ui.model.MazeAppModel;
 import ui.vue.MazeApp;
 
-public class ExportMenuItem extends JMenuItem implements ActionListener  {
+public class ExportMenuItem extends JMenuItem implements ActionListener {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private final MazeApp mazeApp;
-	
+
+	/**
+	 * Retourne un Item d'export du Maze pour FileMenu
+	 * 
+	 * @param mazeApp
+	 */
 	public ExportMenuItem(MazeApp mazeApp) {
-		super("Export") ;
-		this.mazeApp = mazeApp ;		
+		super("Export");
+		this.mazeApp = mazeApp;
 		addActionListener(this);
 	}
-	
+
 	public void actionPerformed(ActionEvent evt) {
 		final MazeAppModel mazeAppModel = mazeApp.getMazeAppModel();
 		mazeAppModel.export();
-}
+	}
 }
