@@ -22,7 +22,7 @@ public class LoadMazeMenuItem extends JMenuItem implements ActionListener {
 	 * @param mazeApp
 	 */
 	public LoadMazeMenuItem(final ui.vue.MazeApp mazeApp) {
-		super("Load a Maze"); // Text of menu item
+		super("Load a Maze");
 		this.mazeApp = mazeApp;
 		addActionListener(this);
 
