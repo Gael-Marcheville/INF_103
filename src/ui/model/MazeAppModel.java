@@ -10,6 +10,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import maze.ABox;
 import maze.DBox;
@@ -135,6 +137,13 @@ public class MazeAppModel {
 		}
 		String fileName = JOptionPane.showInputDialog(null, "Name this maze", "Save", JOptionPane.INFORMATION_MESSAGE);
 		final JFileChooser saveFile = new JFileChooser();
+		int i = fileName.lastIndexOf('.'); //on supprime l'extension si elle existe déjà
+		if (i > 0) {
+		    fileName = fileName.substring(0,i);
+		}
+		fileName += ".txt"; //on ajoute .txt 
+		final FileFilter txtFilter = new FileNameExtensionFilter("txt", "txt");
+		saveFile.setFileFilter(txtFilter);
 		saveFile.setSelectedFile(new File(fileName));
 		final PrintWriter pwfile;
 		final int sf = saveFile.showSaveDialog(null);
