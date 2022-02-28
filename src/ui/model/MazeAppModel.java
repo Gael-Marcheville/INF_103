@@ -208,7 +208,6 @@ public class MazeAppModel {
 			newMaze.setBox(0, 0, new DBox(0, 0, newMaze));
 			newMaze.setBox(nheight - 1, nwidth - 1, new ABox(nheight - 1, nwidth - 1, newMaze));
 			this.setCurrentMaze(newMaze);
-			;
 			setBuildMode(true);
 		}
 	}
@@ -246,7 +245,7 @@ public class MazeAppModel {
 	 */
 	public void setBuildModeType(String buildModeType) {
 		if (this.buildModeType != buildModeType) {
-			if ((buildModeType == "W") || (buildModeType == "E") || (buildModeType == "A") || (buildModeType == "D")) {
+			if ((buildModeType == "Wall") || (buildModeType == "Empty") || (buildModeType == "Arrival") || (buildModeType == "Departure")) {
 				this.buildModeType = buildModeType;
 				stateChanges();
 			}
