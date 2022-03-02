@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
+import java.awt.Color;
 
 import ui.model.MazeAppModel;
 
@@ -18,6 +19,7 @@ public class ChangeBoxButton extends JButton implements ActionListener {
 	 * Nom du bouton représentant le mode
 	 */
 	private final String name;
+	private final String type;
 
 	/**
 	 * Retourne un bouton qui permet d'activer un mode de construction
@@ -29,6 +31,7 @@ public class ChangeBoxButton extends JButton implements ActionListener {
 		this.name = name;
 		this.mazeApp = mazeApp;
 		this.addActionListener(this);
+		this.type = this.getType();
 	}
 
 	/**
@@ -38,12 +41,16 @@ public class ChangeBoxButton extends JButton implements ActionListener {
 
 		switch (this.name) {
 		case "Empty Box":
+			this.setBackground(Color.LIGHT_GRAY);
 			return "Empty";
 		case "Move Arrival":
+			this.setBackground(Color.RED);
 			return "Arrival";
 		case "Move Departure":
+			this.setBackground(Color.GREEN);
 			return "Departure";
 		case "Wall Box":
+			this.setBackground(Color.ORANGE);
 			return "Wall";
 		default:
 			return "M";
@@ -54,7 +61,6 @@ public class ChangeBoxButton extends JButton implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		final MazeAppModel mazeAppModel = this.mazeApp.getMazeAppModel();
-		final String type = this.getType();
 		mazeAppModel.setBuildModeType(type);
 	}
 }

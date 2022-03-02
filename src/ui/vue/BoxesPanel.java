@@ -19,7 +19,7 @@ public class BoxesPanel extends JPanel {
 	private final Color ABoxColor = Color.RED;
 	private final Color EBoxColor = Color.LIGHT_GRAY;
 	private final Color DBoxColor = Color.GREEN;
-	private final Color WBoxColor = Color.BLACK;
+	private final Color WBoxColor = Color.ORANGE;
 	private final Color PBoxColor = Color.YELLOW;
 
 	/**
