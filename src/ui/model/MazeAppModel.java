@@ -47,7 +47,7 @@ public class MazeAppModel {
 		} catch (MazeReadingException e) {
 			reset(5, 5);
 		}
-		width = currentMaze.getWeight();
+		width = currentMaze.getWidth();
 		height = currentMaze.getHeight();
 		setBuildMode(false);
 		setSolveMode(false);
@@ -89,7 +89,7 @@ public class MazeAppModel {
 	public void setCurrentMaze(Maze currentMaze) {
 		this.currentMaze = currentMaze;
 		height = currentMaze.getHeight();
-		width = currentMaze.getWeight();
+		width = currentMaze.getWidth();
 		modified = true;
 		stateChanges();
 	}
@@ -137,11 +137,11 @@ public class MazeAppModel {
 		}
 		String fileName = JOptionPane.showInputDialog(null, "Name this maze", "Save", JOptionPane.INFORMATION_MESSAGE);
 		final JFileChooser saveFile = new JFileChooser();
-		int i = fileName.lastIndexOf('.'); //on supprime l'extension si elle existe déjà
+		int i = fileName.lastIndexOf('.'); // on supprime l'extension si elle existe déjà
 		if (i > 0) {
-		    fileName = fileName.substring(0,i);
+			fileName = fileName.substring(0, i);
 		}
-		fileName += ".txt"; //on ajoute .txt 
+		fileName += ".txt"; // on ajoute .txt
 		final FileFilter txtFilter = new FileNameExtensionFilter("txt", "txt");
 		saveFile.setFileFilter(txtFilter);
 		saveFile.setSelectedFile(new File(fileName));
@@ -245,7 +245,8 @@ public class MazeAppModel {
 	 */
 	public void setBuildModeType(String buildModeType) {
 		if (this.buildModeType != buildModeType) {
-			if ((buildModeType == "Wall") || (buildModeType == "Empty") || (buildModeType == "Arrival") || (buildModeType == "Departure")) {
+			if ((buildModeType == "Wall") || (buildModeType == "Empty") || (buildModeType == "Arrival")
+					|| (buildModeType == "Departure")) {
 				this.buildModeType = buildModeType;
 				stateChanges();
 			}
