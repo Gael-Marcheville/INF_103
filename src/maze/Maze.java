@@ -50,7 +50,7 @@ public class Maze implements GraphInterface {
 	 */
 	public Maze copy() {
 		final int n = this.getHeight();
-		final int m = this.getWeight();
+		final int m = this.getWidth();
 		Maze copy = new Maze(new MBox[n][m]);
 		for (int k = 0; k < n; k++) {
 			for (int j = 0; j < m; j++) {
@@ -75,8 +75,12 @@ public class Maze implements GraphInterface {
 	 *
 	 * @return int largeur du labyrinthe
 	 */
-	public int getWeight() {
-		return maze[0].length;
+	public int getWidth() {
+		if (maze.length != 0) { //si la hauteur est nulle, la largeur est nulle
+			return maze[0].length;
+		} else {
+			return 0;
+		}
 	}
 
 	/**
