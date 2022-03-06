@@ -1,4 +1,4 @@
-package tp06;
+package main;
 
 import ui.vue.MazeApp;
 
